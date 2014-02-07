@@ -9,10 +9,16 @@ Enable by adding the following to your phpunit.xml:
 ...
     <listeners>
         <listener class="JohnKary\PHPUnit\Listener\SpeedTrapListener">
-            <array>
-                <integer>500</integer> <!-- Slowness threshold in ms -->
-                <integer>10</integer>  <!-- Number of slow tests to report on -->
-            </array>
+            <arguments>
+                <array>
+                    <element key="slowThreshold"> <!-- Slowness threshold in ms -->
+                        <integer>500</integer>
+                    </element>
+                    <element key="reportLength"> <!-- Number of slow tests to report on -->
+                        <integer>5</integer>
+                    </element>
+                </array>
+            </arguments>
         </listener>
     </listeners>
 </phpunit>

@@ -40,10 +40,9 @@ class SpeedTrapListener implements \PHPUnit_Framework_TestListener
      */
     protected $slow = array();
 
-    public function __construct($slowThreshold = 500, $reportLength = 10)
+    public function __construct(array $options = array())
     {
-        $this->slowThreshold = $slowThreshold;
-        $this->reportLength = $reportLength;
+        $this->loadOptions($options);
     }
 
     /**
@@ -257,5 +256,16 @@ class SpeedTrapListener implements \PHPUnit_Framework_TestListener
         if ($hidden = $this->getHiddenCount($this->slow)) {
             echo sprintf("...and there %s %s more above your threshold hidden from view", $hidden == 1 ? 'is' : 'are', $hidden);
         }
+    }
+
+    /**
+     * Populate options into class internals
+     *
+     * @param array $options
+     */
+    protected function loadOptions(array $options)
+    {
+        $this->slowThreshold = isset($options['slowThreshold']) ? $options['slowThreshold'] : 500;
+        $this->reportLength = isset($options['reportLength']) ? $options['reportLength'] : 10;
     }
 }

@@ -22,8 +22,14 @@
     <listeners>
         <listener class="JohnKary\PHPUnit\Listener\SpeedTrapListener">
             <arguments>
-                <integer>455</integer>
-                <integer>10</integer>
+                <array>
+                    <element key="slowThreshold">
+                        <integer>500</integer>
+                    </element>
+                    <element key="reportLength">
+                        <integer>5</integer>
+                    </element>
+                </array>
             </arguments>
         </listener>
     </listeners>
