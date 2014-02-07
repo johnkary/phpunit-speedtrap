@@ -238,10 +238,12 @@ class SpeedTrapListener implements \PHPUnit_Framework_TestListener
      */
     protected function renderBody()
     {
-        $length = $this->getReportLength($this->slow);
+        $slowTests = $this->slow;
+
+        $length = $this->getReportLength($slowTests);
         for ($i = 1; $i <= $length; ++$i) {
-            $label = key($this->slow);
-            $time = array_shift($this->slow);
+            $label = key($slowTests);
+            $time = array_shift($slowTests);
 
             echo sprintf(" %s. %sms to run %s\n", $i, $time, $label);
         }
