@@ -24,7 +24,7 @@ class SpeedTrapListener implements \PHPUnit_Framework_TestListener
      *
      * @var int
      */
-    private $slowThreshold;
+    protected $slowThreshold;
 
     /**
      * Number of tests to report on for slowness.
@@ -181,7 +181,7 @@ class SpeedTrapListener implements \PHPUnit_Framework_TestListener
      * @param float $time
      * @return int
      */
-    private function toMilliseconds($time)
+    protected function toMilliseconds($time)
     {
         return (int) round($time * 1000);
     }
@@ -192,7 +192,7 @@ class SpeedTrapListener implements \PHPUnit_Framework_TestListener
      * @param \PHPUnit_Framework_TestCase $test
      * @return string
      */
-    private function makeLabel(\PHPUnit_Framework_TestCase $test)
+    protected function makeLabel(\PHPUnit_Framework_TestCase $test)
     {
         return sprintf('%s:%s', get_class($test), $test->getName());
     }
@@ -202,7 +202,7 @@ class SpeedTrapListener implements \PHPUnit_Framework_TestListener
      *
      * @return int
      */
-    private function getReportLength()
+    protected function getReportLength()
     {
         return min(count($this->slow), $this->reportLength);
     }
@@ -212,7 +212,7 @@ class SpeedTrapListener implements \PHPUnit_Framework_TestListener
      *
      * @return int Number of hidden slow tests
      */
-    private function getHiddenCount()
+    protected function getHiddenCount()
     {
         $total = count($this->slow);
         $showing = $this->getReportLength($this->slow);
