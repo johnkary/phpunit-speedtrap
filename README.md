@@ -66,3 +66,7 @@ This allows you to set your own criteria for "slow" tests, and how many you care
 ## Inspiration
 
 This project was inspired by Rspec's `-p` option that displays feedback about slow tests.
+
+## License
+
+phpunit-speedtrap is available under the MIT License.
