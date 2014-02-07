@@ -5,7 +5,7 @@ Reports on slow-running tests in your PHPUnit test suite.
 Enable by adding the following to your phpunit.xml:
 
 ```xml
-<phpunit>
+<phpunit bootstrap="vendor/autoload.php">
 ...
     <listeners>
         <listener class="JohnKary\PHPUnit\Listener\SpeedTrapListener">
