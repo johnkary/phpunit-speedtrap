@@ -2,7 +2,7 @@
     "name": "johnkary/phpunit-speedtrap",
     "description": "Find slow tests in your PHPUnit test suite",
     "keywords": ["PHPUnit", "slow", "profile"],
-    "homepage": "",
+    "homepage": "https://github.com/johnkary/phpunit-speedtrap",
     "type": "library",
     "license": "MIT",
     "authors": [
