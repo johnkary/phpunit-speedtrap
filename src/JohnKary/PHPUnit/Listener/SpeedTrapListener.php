@@ -119,7 +119,9 @@ class SpeedTrapListener implements \PHPUnit_Framework_TestListener
     public function endTest(\PHPUnit_Framework_Test $test, $time)
     {
         $time = $this->toMilliseconds($time);
-        if ($this->isSlow($time)) {
+        $threshold = $this->getSlowThreshold($test);
+
+        if ($this->isSlow($time, $threshold)) {
             $this->addSlowTest($test, $time);
         }
     }
@@ -155,12 +157,13 @@ class SpeedTrapListener implements \PHPUnit_Framework_TestListener
     /**
      * Whether the given test execution time is considered slow.
      *
-     * @param int $time Test execution time in milliseconds
+     * @param int $time          Test execution time in milliseconds
+     * @param int $slowThreshold Test execution time at which a test should be considered slow (milliseconds)
      * @return bool
      */
-    protected function isSlow($time)
+    protected function isSlow($time, $slowThreshold)
     {
-        return $time >= $this->slowThreshold;
+        return $time >= $slowThreshold;
     }
 
     /**
@@ -279,5 +282,28 @@ class SpeedTrapListener implements \PHPUnit_Framework_TestListener
     {
         $this->slowThreshold = isset($options['slowThreshold']) ? $options['slowThreshold'] : 500;
         $this->reportLength = isset($options['reportLength']) ? $options['reportLength'] : 10;
+    }
+
+    /**
+     * Get slow test threshold for given test. A TestCase can override the
+     * suite-wide slow threshold by using the annotation @slowThreshold with the
+     * threshold value in milliseconds.
+     *
+     * The following test will only be considered slow when its execution time
+     * reaches 5000ms (5 seconds):
+     *
+     * <code>
+     * \@slowThreshold 5000
+     * public function testLongRunningProcess() {}
+     * </code>
+     *
+     * @param \PHPUnit_Framework_TestCase $test
+     * @return int
+     */
+    protected function getSlowThreshold(\PHPUnit_Framework_TestCase $test)
+    {
+        $ann = $test->getAnnotations();
+
+        return isset($ann['method']['slowThreshold'][0]) ? $ann['method']['slowThreshold'][0] : $this->slowThreshold;
     }
 }

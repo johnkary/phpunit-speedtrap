@@ -62,6 +62,25 @@ These configuration parameters are set in `phpunit.xml` when adding the listener
 
 This allows you to set your own criteria for "slow" tests, and how many you care to know about.
 
+## Custom slow threshold per-test method
+
+You may have a few tests in your suite that take a little bit longer to run, and want to have a higher slow threshold than the rest of your suite.
+
+You can use the annotation `@slowThreshold` to set a custom slow threshold on a per-test method basis. This number can be higher or lower than the default threshold and will be used in place of the default threshold for that specific test.
+
+```php
+class SomeTestCase extends \PHPUnit_Framework_TestCase
+{
+    /**
+     * @slowThreshold 5000
+     */
+    public function testLongRunningProcess()
+    {
+        // Code to exercise your long-running SUT
+    }
+}
+```
+
 ## Inspiration
 
 This project was inspired by Rspec's `-p` option that displays feedback about slow tests.
