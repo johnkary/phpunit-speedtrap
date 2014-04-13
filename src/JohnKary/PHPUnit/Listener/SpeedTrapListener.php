@@ -83,7 +83,7 @@ class SpeedTrapListener implements \PHPUnit_Framework_TestListener
      *
      * @param \PHPUnit_Framework_Test $test
      * @param \Exception              $e
-     * @param float                  $time
+     * @param float                   $time
      */
     public function addSkippedTest(\PHPUnit_Framework_Test $test, \Exception $e, $time)
     {
@@ -102,7 +102,7 @@ class SpeedTrapListener implements \PHPUnit_Framework_TestListener
      * A test ended.
      *
      * @param \PHPUnit_Framework_Test $test
-     * @param float                  $time
+     * @param float                   $time
      */
     public function endTest(\PHPUnit_Framework_Test $test, $time)
     {
