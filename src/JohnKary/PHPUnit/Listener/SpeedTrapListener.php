@@ -19,8 +19,8 @@ class SpeedTrapListener implements \PHPUnit_Framework_TestListener
     protected $suites = 0;
 
     /**
-     * Time in milliseconds at which a test will be considered "slow" and
-     * be reported by this listener.
+     * Time in milliseconds at which a test will be considered "slow" and be
+     * reported by this listener.
      *
      * @var int
      */
@@ -34,12 +34,17 @@ class SpeedTrapListener implements \PHPUnit_Framework_TestListener
     protected $reportLength;
 
     /**
-     * Collection of slow tests
+     * Collection of slow tests.
      *
      * @var array
      */
     protected $slow = array();
 
+    /**
+     * Construct a new instance.
+     *
+     * @param array $options
+     */
     public function __construct(array $options = array())
     {
         $this->loadOptions($options);
@@ -201,7 +206,7 @@ class SpeedTrapListener implements \PHPUnit_Framework_TestListener
     }
 
     /**
-     * Label for describing a test
+     * Label for describing a test.
      *
      * @param \PHPUnit_Framework_TestCase $test
      * @return string
@@ -240,7 +245,7 @@ class SpeedTrapListener implements \PHPUnit_Framework_TestListener
     }
 
     /**
-     * Renders slow test report header
+     * Renders slow test report header.
      */
     protected function renderHeader()
     {
@@ -248,7 +253,7 @@ class SpeedTrapListener implements \PHPUnit_Framework_TestListener
     }
 
     /**
-     * Renders slow test report body
+     * Renders slow test report body.
      */
     protected function renderBody()
     {
@@ -264,7 +269,7 @@ class SpeedTrapListener implements \PHPUnit_Framework_TestListener
     }
 
     /**
-     * Renders slow test report footer
+     * Renders slow test report footer.
      */
     protected function renderFooter()
     {
@@ -274,7 +279,7 @@ class SpeedTrapListener implements \PHPUnit_Framework_TestListener
     }
 
     /**
-     * Populate options into class internals
+     * Populate options into class internals.
      *
      * @param array $options
      */
@@ -286,8 +291,8 @@ class SpeedTrapListener implements \PHPUnit_Framework_TestListener
 
     /**
      * Get slow test threshold for given test. A TestCase can override the
-     * suite-wide slow threshold by using the annotation @slowThreshold with the
-     * threshold value in milliseconds.
+     * suite-wide slow threshold by using the annotation @slowThreshold with
+     * the threshold value in milliseconds.
      *
      * The following test will only be considered slow when its execution time
      * reaches 5000ms (5 seconds):
