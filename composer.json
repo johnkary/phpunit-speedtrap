@@ -11,7 +11,6 @@
             "email": "john@johnkary.net"
         }
     ],
-    "minimum-stability": "stable",
     "require": {
         "php": ">=5.3.0"
     },
@@ -21,6 +20,11 @@
     "autoload": {
         "psr-0": {
             "JohnKary": "src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
         }
     }
 }
