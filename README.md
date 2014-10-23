@@ -47,10 +47,10 @@ These configuration parameters are set in `phpunit.xml` when adding the listener
         <listener class="JohnKary\PHPUnit\Listener\SpeedTrapListener">
             <arguments>
                 <array>
-                    <element key="slowThreshold"> <!-- Slowness threshold in ms -->
+                    <element key="slowThreshold">
                         <integer>500</integer>
                     </element>
-                    <element key="reportLength"> <!-- Number of slow tests to report on -->
+                    <element key="reportLength">
                         <integer>5</integer>
                     </element>
                 </array>
