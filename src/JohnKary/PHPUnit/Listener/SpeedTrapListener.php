@@ -177,11 +177,13 @@ class SpeedTrapListener implements \PHPUnit_Framework_TestListener
      * @param \PHPUnit_Framework_TestCase $test
      * @param int                         $time Test execution time in milliseconds
      */
-    protected function addSlowTest(\PHPUnit_Framework_TestCase $test, $time)
+    protected function addSlowTest($test, $time)
     {
-        $label = $this->makeLabel($test);
+        if ($test instanceof \PHPUnit_Framework_TestCase) {
+            $label = $this->makeLabel($test);
 
-        $this->slow[$label] = $time;
+            $this->slow[$label] = $time;
+        }
     }
 
     /**
@@ -305,10 +307,12 @@ class SpeedTrapListener implements \PHPUnit_Framework_TestListener
      * @param \PHPUnit_Framework_TestCase $test
      * @return int
      */
-    protected function getSlowThreshold(\PHPUnit_Framework_TestCase $test)
+    protected function getSlowThreshold($test)
     {
-        $ann = $test->getAnnotations();
+        if ($test instanceof \PHPUnit_Framework_TestCase) {
+            $ann = $test->getAnnotations();
 
-        return isset($ann['method']['slowThreshold'][0]) ? $ann['method']['slowThreshold'][0] : $this->slowThreshold;
+            return isset($ann['method']['slowThreshold'][0]) ? $ann['method']['slowThreshold'][0] : $this->slowThreshold;
+        }
     }
 }
