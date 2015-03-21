@@ -123,6 +123,8 @@ class SpeedTrapListener implements \PHPUnit_Framework_TestListener
      */
     public function endTest(\PHPUnit_Framework_Test $test, $time)
     {
+        if (!$test instanceof \PHPUnit_Framework_TestCase) return;
+
         $time = $this->toMilliseconds($time);
         $threshold = $this->getSlowThreshold($test);
 
