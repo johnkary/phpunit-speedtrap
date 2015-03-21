@@ -4,7 +4,7 @@ SpeedTrap reports on slow-running tests in your PHPUnit test suite right in your
 
 Many factors affect test execution time. A test not properly isolated from variable latency (database, network, etc.) and even basic load on your test machine will cause test times to fluctuate.
 
-SpeedTrap helps you **identify slow tests** but cannot tell you **why** those tests are slow. For that you should check out something like [PHPUnit\_Listener\_XHProf](https://github.com/sebastianbergmann/phpunit-testlistener-xhprof) to help identify specifically which methods in your call stack are slow.
+SpeedTrap helps you **identify slow tests** but cannot tell you **why** those tests are slow. For that you should check out [Blackfire.io](http://blackfire.io) for easy profiling your test suite, or another PHPUnit listener [PHPUnit\_Listener\_XHProf](https://github.com/sebastianbergmann/phpunit-testlistener-xhprof), to help identify specifically which methods in your call stack are slow.
 
 ![Screenshot of terminal using SpeedTrap](http://i.imgur.com/Zr34giR.png)
 
