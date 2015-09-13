@@ -17,7 +17,7 @@ SpeedTrap is installable via [Composer](http://getcomposer.org) and should be ad
 
 ## Usage
 
-Enabled it with all defaults by adding the following to your test suite's `phpunit.xml` file:
+Enable with all defaults by adding the following to your test suite's `phpunit.xml` file:
 
 ```xml
 <phpunit bootstrap="vendor/autoload.php">
