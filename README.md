@@ -12,7 +12,7 @@ SpeedTrap helps you **identify slow tests** but cannot tell you **why** those te
 
 SpeedTrap is installable via [Composer](http://getcomposer.org) and should be added as a `require-dev` dependency:
 
-    php composer.phar require --dev johnkary/phpunit-speedtrap ~1.0@dev
+    composer require --dev johnkary/phpunit-speedtrap
 
 
 ## Usage
