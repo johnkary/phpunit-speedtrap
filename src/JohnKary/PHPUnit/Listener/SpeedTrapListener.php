@@ -236,7 +236,7 @@ class SpeedTrapListener implements \PHPUnit_Framework_TestListener
     protected function getHiddenCount()
     {
         $total = count($this->slow);
-        $showing = $this->getReportLength($this->slow);
+        $showing = $this->getReportLength();
 
         $hidden = 0;
         if ($total > $showing) {
@@ -261,7 +261,7 @@ class SpeedTrapListener implements \PHPUnit_Framework_TestListener
     {
         $slowTests = $this->slow;
 
-        $length = $this->getReportLength($slowTests);
+        $length = $this->getReportLength();
         for ($i = 1; $i <= $length; ++$i) {
             $label = key($slowTests);
             $time = array_shift($slowTests);
@@ -275,7 +275,7 @@ class SpeedTrapListener implements \PHPUnit_Framework_TestListener
      */
     protected function renderFooter()
     {
-        if ($hidden = $this->getHiddenCount($this->slow)) {
+        if ($hidden = $this->getHiddenCount()) {
             echo sprintf("...and there %s %s more above your threshold hidden from view", $hidden == 1 ? 'is' : 'are', $hidden);
         }
     }
