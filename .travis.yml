@@ -25,8 +25,8 @@ cache:
 before_script:
   - phpenv config-rm xdebug.ini
   - composer self-update
-  - composer install
   - composer require phpunit/phpunit:${PHPUNIT}
+  - composer install
 
 script:
   - ./vendor/bin/phpunit -c phpunit.xml.example --testsuite tests
