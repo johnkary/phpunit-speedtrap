@@ -8,15 +8,23 @@ php:
   - 7.1
 
 env:
-  - PHPUNIT=4.8
-  - PHPUNIT=5.0
-  - PHPUNIT=5.1
-  - PHPUNIT=5.2
-  - PHPUNIT=5.3
-  - PHPUNIT=5.4
-  - PHPUNIT=5.5
-  - PHPUNIT=5.6
-  - PHPUNIT=5.7
+  - PHPUNIT=4.8.*
+  - PHPUNIT=5.0.*
+  - PHPUNIT=5.1.*
+  - PHPUNIT=5.2.*
+  - PHPUNIT=5.3.*
+  - PHPUNIT=5.4.*
+  - PHPUNIT=5.5.*
+  - PHPUNIT=5.6.*
+  - PHPUNIT=5.6.x-dev
+  - PHPUNIT=5.7.x-dev
+  - PHPUNIT=6.0.x-dev
+
+matrix:
+  allow_failure:
+    - env: PHPUNIT=5.6.x-dev
+    - env: PHPUNIT=5.7.x-dev
+    - env: PHPUNIT=6.0.x-dev
 
 cache:
   directories:
