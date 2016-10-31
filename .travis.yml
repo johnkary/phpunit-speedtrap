@@ -30,7 +30,7 @@ cache:
     - $HOME/.composer
 
 before_script:
-  - phpenv config-rm xdebug.ini
+  - phpenv config-rm xdebug.ini || true
   - composer self-update
   - composer require phpunit/phpunit:${PHPUNIT}
 
