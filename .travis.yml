@@ -1,0 +1,32 @@
+language: php
+
+sudo: false
+
+php:
+  - 5.6
+  - 7.0
+  - 7.1
+
+env:
+  - PHPUNIT=4.8
+  - PHPUNIT=5.0
+  - PHPUNIT=5.1
+  - PHPUNIT=5.2
+  - PHPUNIT=5.3
+  - PHPUNIT=5.4
+  - PHPUNIT=5.5
+  - PHPUNIT=5.6
+  - PHPUNIT=5.7
+
+cache:
+  directories:
+    - $HOME/.composer
+
+before_script:
+  - phpenv config-rm xdebug.ini
+  - composer self-update
+  - composer install
+  - composer require "phpunit/phpunit=${PHPUNIT}.*"
+
+script:
+  - phpunit -c phpunit.xml.example
