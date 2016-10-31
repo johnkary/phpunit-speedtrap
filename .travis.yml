@@ -26,7 +26,7 @@ before_script:
   - phpenv config-rm xdebug.ini
   - composer self-update
   - composer install
-  - composer require "phpunit/phpunit=${PHPUNIT}.*"
+  - composer require phpunit/phpunit:${PHPUNIT}
 
 script:
-  - phpunit -c phpunit.xml.example
+  - ./vendor/bin/phpunit -c phpunit.xml.example --testsuite tests

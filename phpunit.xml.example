@@ -17,6 +17,9 @@
         <testsuite name="Project Test Suite">
             <directory>src/*/*/*/Tests</directory>
         </testsuite>
+        <testsuite name="tests">
+            <directory>tests</directory>
+        </testsuite>
     </testsuites>
 
     <listeners>
