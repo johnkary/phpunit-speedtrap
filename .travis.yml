@@ -21,10 +21,9 @@ env:
   - PHPUNIT=6.0.x-dev
 
 matrix:
-  allow_failure:
-    - env: PHPUNIT=5.6.x-dev
-    - env: PHPUNIT=5.7.x-dev
-    - env: PHPUNIT=6.0.x-dev
+  exclude:
+    - php: 5.6
+      env: PHPUNIT=6.0.x-dev
 
 cache:
   directories:
