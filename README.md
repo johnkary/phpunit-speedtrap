@@ -1,5 +1,7 @@
 # phpunit-speedtrap
 
+[![Build Status](https://travis-ci.org/johnkary/phpunit-speedtrap.svg?branch=master)](https://travis-ci.org/johnkary/phpunit-speedtrap)
+
 SpeedTrap reports on slow-running tests in your PHPUnit test suite right in your console.
 
 Many factors affect test execution time. A test not properly isolated from variable latency (database, network, etc.) and even basic load on your test machine will cause test times to fluctuate.
