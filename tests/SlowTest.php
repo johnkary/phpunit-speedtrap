@@ -1,9 +1,14 @@
-<?php
+<?php declare(strict_types=1);
 
-class SlowTest extends \PHPUnit_Framework_TestCase
+namespace JohnKary\PHPUnit\Tests\Listener;
+
+use PHPUnit\Framework\TestCase;
+
+final class SlowTest extends TestCase
 {
     public function testListener()
     {
         sleep(1);
+        $this->assertTrue(true);
     }
 }
