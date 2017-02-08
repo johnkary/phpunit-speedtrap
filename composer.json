@@ -14,12 +14,12 @@
     },
     "autoload": {
         "psr-4": {
-            "JohnKary\\PHPUnit\\": "src/JohnKary/PHPUnit"
+            "JohnKary\\PHPUnit\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "JohnKary\\PHPUnit\\Tests\\Listener\\": "tests"
+            "JohnKary\\PHPUnit\\Tests\\": "tests"
         }
     }
 }
