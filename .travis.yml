@@ -12,7 +12,6 @@ cache:
     - $HOME/.composer
 
 before_script:
-  - phpenv config-rm xdebug
   - composer install
 
 script:
