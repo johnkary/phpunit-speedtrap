@@ -3,41 +3,17 @@ language: php
 sudo: false
 
 php:
-  - 5.6
   - 7.0
   - 7.1
-  - nightly
   - hhvm
-
-env:
-  - PHPUNIT=4.7.*     # EOL August 7, 2016
-  - PHPUNIT=4.8.*     # EOL August 7, 2016
-  - PHPUNIT=5.0.*     # EOL February 3, 2017
-  - PHPUNIT=5.1.*     # EOL February 3, 2017
-  - PHPUNIT=5.2.*     # EOL February 2, 2018
-  - PHPUNIT=5.3.*     # EOL February 2, 2018
-  - PHPUNIT=5.4.*     # EOL February 2, 2018
-  - PHPUNIT=5.5.*     # EOL February 2, 2018
-  - PHPUNIT=5.6.*     # EOL February 2, 2018
-  - PHPUNIT=5.7.*     # EOL February 2, 2018
-  - PHPUNIT=^6.0      # EOL February 2, 2018
-
-matrix:
-  exclude:
-    - php: 5.6
-      env: PHPUNIT=^6.0
-    - php: hhvm
-      env: PHPUNIT=^6.0
 
 cache:
   directories:
     - $HOME/.composer
 
 before_script:
-  - phpenv config-rm xdebug.ini || true
-  - composer self-update
-  - composer config minimum-stability dev
-  - composer require phpunit/phpunit:${PHPUNIT}
+  - phpenv config-rm xdebug
+  - composer install
 
 script:
-  - ./vendor/bin/phpunit -c phpunit.xml.example --testsuite tests
+  - vendor/bin/phpunit --testsuite tests
