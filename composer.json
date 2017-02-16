@@ -13,7 +13,7 @@
     ],
     "require": {
         "php": ">=7.0",
-        "phpunit/phpunit": ">=6.0"
+        "phpunit/phpunit": "^6.0"
     },
     "autoload": {
         "psr-0": {
