@@ -3,23 +3,12 @@ language: php
 sudo: false
 
 php:
-  - 5.6
   - 7.0
   - 7.1
   - nightly
-  - hhvm
 
 env:
-  - PHPUNIT=4.7.*
-  - PHPUNIT=4.8.*
-  - PHPUNIT=5.0.*
-  - PHPUNIT=5.1.*
-  - PHPUNIT=5.2.*
-  - PHPUNIT=5.3.*
-  - PHPUNIT=5.4.*
-  - PHPUNIT=5.5.*
-  - PHPUNIT=5.6.*
-  - PHPUNIT=5.7.*
+  - PHPUNIT=6.0.*
 
 cache:
   directories:
@@ -27,8 +16,7 @@ cache:
 
 before_script:
   - phpenv config-rm xdebug.ini || true
-  - composer self-update
   - composer require phpunit/phpunit:${PHPUNIT}
 
 script:
-  - ./vendor/bin/phpunit -c phpunit.xml.example --testsuite tests
+  - ./vendor/bin/phpunit -c phpunit.xml.example

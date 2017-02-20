@@ -17,9 +17,6 @@
         <testsuite name="Project Test Suite">
             <directory>src/*/*/*/Tests</directory>
         </testsuite>
-        <testsuite name="tests">
-            <directory>tests</directory>
-        </testsuite>
     </testsuites>
 
     <listeners>
@@ -41,7 +38,7 @@
         <whitelist>
             <directory>src</directory>
             <exclude>
-                <directory>src/*/Tests</directory>
+                <directory>src/*/*/*/Tests</directory>
             </exclude>
         </whitelist>
     </filter>
