@@ -38,7 +38,7 @@
         <whitelist>
             <directory>src</directory>
             <exclude>
-                <directory>src/*/Tests</directory>
+                <directory>src/*/*/*/Tests</directory>
             </exclude>
         </whitelist>
     </filter>
