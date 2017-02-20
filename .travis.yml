@@ -20,4 +20,4 @@ before_script:
   - composer require phpunit/phpunit:${PHPUNIT}
 
 script:
-  - ./vendor/bin/phpunit -c phpunit.xml.example --testsuite tests
+  - ./vendor/bin/phpunit -c phpunit.xml.example
