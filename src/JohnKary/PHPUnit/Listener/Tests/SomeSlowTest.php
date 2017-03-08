@@ -43,11 +43,11 @@ class SomeSlowTest extends TestCase
     }
     public function provideTime()
     {
-        return array(
-            'Rock' => array(800),
-            'Chalk' => array(700),
-            'Jayhawk' => array(600),
-        );
+        return [
+            'Rock' => [800],
+            'Chalk' => [700],
+            'Jayhawk' => [600],
+        ];
     }
 
     /**

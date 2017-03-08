@@ -47,14 +47,14 @@ class SpeedTrapListener implements TestListener
      *
      * @var array
      */
-    protected $slow = array();
+    protected $slow = [];
 
     /**
      * Construct a new instance.
      *
      * @param array $options
      */
-    public function __construct(array $options = array())
+    public function __construct(array $options = [])
     {
         $this->loadOptions($options);
     }
