@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace JohnKary\PHPUnit\Listener;
 
@@ -187,7 +188,7 @@ class SpeedTrapListener implements TestListener
      * @param int $slowThreshold Test execution time at which a test should be considered slow (milliseconds)
      * @return bool
      */
-    protected function isSlow($time, $slowThreshold)
+    protected function isSlow(int $time, int $slowThreshold) : bool
     {
         return $time >= $slowThreshold;
     }
@@ -196,9 +197,9 @@ class SpeedTrapListener implements TestListener
      * Stores a test as slow.
      *
      * @param TestCase $test
-     * @param int                         $time Test execution time in milliseconds
+     * @param int      $time Test execution time in milliseconds
      */
-    protected function addSlowTest(TestCase $test, $time)
+    protected function addSlowTest(TestCase $test, int $time)
     {
         $label = $this->makeLabel($test);
 
@@ -210,7 +211,7 @@ class SpeedTrapListener implements TestListener
      *
      * @return bool
      */
-    protected function hasSlowTests()
+    protected function hasSlowTests() : bool
     {
         return !empty($this->slow);
     }
@@ -221,7 +222,7 @@ class SpeedTrapListener implements TestListener
      * @param float $time
      * @return int
      */
-    protected function toMilliseconds($time)
+    protected function toMilliseconds(float $time) : int
     {
         return (int) round($time * 1000);
     }
@@ -232,7 +233,7 @@ class SpeedTrapListener implements TestListener
      * @param TestCase $test
      * @return string
      */
-    protected function makeLabel(TestCase $test)
+    protected function makeLabel(TestCase $test) : string
     {
         return sprintf('%s:%s', get_class($test), $test->getName());
     }
@@ -242,7 +243,7 @@ class SpeedTrapListener implements TestListener
      *
      * @return int
      */
-    protected function getReportLength()
+    protected function getReportLength() : int
     {
         return min(count($this->slow), $this->reportLength);
     }
@@ -253,7 +254,7 @@ class SpeedTrapListener implements TestListener
      *
      * @return int
      */
-    protected function getHiddenCount()
+    protected function getHiddenCount() : int
     {
         $total = count($this->slow);
         $showing = $this->getReportLength();
@@ -327,10 +328,10 @@ class SpeedTrapListener implements TestListener
      * @param TestCase $test
      * @return int
      */
-    protected function getSlowThreshold(TestCase $test)
+    protected function getSlowThreshold(TestCase $test) : int
     {
         $ann = $test->getAnnotations();
 
-        return isset($ann['method']['slowThreshold'][0]) ? $ann['method']['slowThreshold'][0] : $this->slowThreshold;
+        return isset($ann['method']['slowThreshold'][0]) ? (int) $ann['method']['slowThreshold'][0] : $this->slowThreshold;
     }
 }
