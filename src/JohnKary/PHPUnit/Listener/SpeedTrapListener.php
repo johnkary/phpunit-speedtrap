@@ -3,12 +3,7 @@ declare(strict_types=1);
 
 namespace JohnKary\PHPUnit\Listener;
 
-use PHPUnit\Framework\AssertionFailedError;
-use PHPUnit\Framework\TestSuite;
-use PHPUnit\Framework\Test;
-use PHPUnit\Framework\TestCase;
-use PHPUnit\Framework\TestListener;
-use PHPUnit\Framework\Warning;
+use PHPUnit\Framework\{AssertionFailedError, TestSuite, Test, TestCase, TestListener, Warning};
 
 /**
  * A PHPUnit TestListener that exposes your slowest running tests by outputting
