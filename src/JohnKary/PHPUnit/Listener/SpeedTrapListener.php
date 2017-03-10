@@ -21,20 +21,20 @@ class SpeedTrapListener implements TestListener
      * Increments as more suites are run, then decremented as they finish. All
      * suites have been run when returns to 0.
      *
-     * @var integer
+     * @var int
      */
     protected $suites = 0;
 
     /**
-     * Time in milliseconds at which a test will be considered "slow" and be
-     * reported by this listener.
+     * Test execution time (milliseconds) after which a test will be considered
+     * "slow" and be included in the slowness report.
      *
      * @var int
      */
     protected $slowThreshold;
 
     /**
-     * Number of tests to report on for slowness.
+     * Number of tests to print in slowness report.
      *
      * @var int
      */
@@ -42,6 +42,8 @@ class SpeedTrapListener implements TestListener
 
     /**
      * Collection of slow tests.
+     * Keys are labels describing the test (string)
+     * Values are total execution time of given test (int)
      *
      * @var array
      */
@@ -225,7 +227,7 @@ class SpeedTrapListener implements TestListener
     }
 
     /**
-     * Label for describing a test.
+     * Label describing a test.
      *
      * @param TestCase $test
      * @return string
@@ -236,7 +238,7 @@ class SpeedTrapListener implements TestListener
     }
 
     /**
-     * Calculate number of slow tests to report about.
+     * Calculate number of tests to include in slowness report.
      *
      * @return int
      */
@@ -246,9 +248,10 @@ class SpeedTrapListener implements TestListener
     }
 
     /**
-     * Find how many slow tests occurred that won't be shown due to list length.
+     * Calculate number of slow tests to be hidden from the slowness report
+     * due to list length.
      *
-     * @return int Number of hidden slow tests
+     * @return int
      */
     protected function getHiddenCount()
     {
@@ -264,7 +267,7 @@ class SpeedTrapListener implements TestListener
     }
 
     /**
-     * Renders slow test report header.
+     * Renders slowness report header.
      */
     protected function renderHeader()
     {
@@ -272,7 +275,7 @@ class SpeedTrapListener implements TestListener
     }
 
     /**
-     * Renders slow test report body.
+     * Renders slowness report body.
      */
     protected function renderBody()
     {
@@ -288,7 +291,7 @@ class SpeedTrapListener implements TestListener
     }
 
     /**
-     * Renders slow test report footer.
+     * Renders slowness report footer.
      */
     protected function renderFooter()
     {
@@ -309,12 +312,12 @@ class SpeedTrapListener implements TestListener
     }
 
     /**
-     * Get slow test threshold for given test. A TestCase can override the
-     * suite-wide slow threshold by using the annotation @slowThreshold with
-     * the threshold value in milliseconds.
+     * Calculate slow test threshold for given test. A TestCase may override the
+     * suite-wide slowness threshold by using the annotation {@slowThreshold}
+     * with a threshold value in milliseconds.
      *
-     * The following test will only be considered slow when its execution time
-     * reaches 5000ms (5 seconds):
+     * For example, the following test would be considered slow if its execution
+     * time meets or exceeds 5000ms (5 seconds):
      *
      * <code>
      * \@slowThreshold 5000
