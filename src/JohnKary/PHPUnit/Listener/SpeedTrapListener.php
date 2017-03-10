@@ -308,8 +308,8 @@ class SpeedTrapListener implements TestListener
      */
     protected function loadOptions(array $options)
     {
-        $this->slowThreshold = isset($options['slowThreshold']) ? $options['slowThreshold'] : 500;
-        $this->reportLength = isset($options['reportLength']) ? $options['reportLength'] : 10;
+        $this->slowThreshold = $options['slowThreshold'] ?? 500;
+        $this->reportLength = $options['reportLength'] ?? 10;
     }
 
     /**
