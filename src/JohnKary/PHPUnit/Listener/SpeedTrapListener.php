@@ -183,7 +183,7 @@ class SpeedTrapListener implements TestListener
      * @param int $slowThreshold Test execution time at which a test should be considered slow (milliseconds)
      * @return bool
      */
-    protected function isSlow(int $time, int $slowThreshold) : bool
+    protected function isSlow(int $time, int $slowThreshold): bool
     {
         return $time >= $slowThreshold;
     }
@@ -206,7 +206,7 @@ class SpeedTrapListener implements TestListener
      *
      * @return bool
      */
-    protected function hasSlowTests() : bool
+    protected function hasSlowTests(): bool
     {
         return !empty($this->slow);
     }
@@ -217,7 +217,7 @@ class SpeedTrapListener implements TestListener
      * @param float $time
      * @return int
      */
-    protected function toMilliseconds(float $time) : int
+    protected function toMilliseconds(float $time): int
     {
         return (int) round($time * 1000);
     }
@@ -228,7 +228,7 @@ class SpeedTrapListener implements TestListener
      * @param TestCase $test
      * @return string
      */
-    protected function makeLabel(TestCase $test) : string
+    protected function makeLabel(TestCase $test): string
     {
         return sprintf('%s:%s', get_class($test), $test->getName());
     }
@@ -238,7 +238,7 @@ class SpeedTrapListener implements TestListener
      *
      * @return int
      */
-    protected function getReportLength() : int
+    protected function getReportLength(): int
     {
         return min(count($this->slow), $this->reportLength);
     }
@@ -249,7 +249,7 @@ class SpeedTrapListener implements TestListener
      *
      * @return int
      */
-    protected function getHiddenCount() : int
+    protected function getHiddenCount(): int
     {
         $total = count($this->slow);
         $showing = $this->getReportLength();
@@ -323,7 +323,7 @@ class SpeedTrapListener implements TestListener
      * @param TestCase $test
      * @return int
      */
-    protected function getSlowThreshold(TestCase $test) : int
+    protected function getSlowThreshold(TestCase $test): int
     {
         $ann = $test->getAnnotations();
 
