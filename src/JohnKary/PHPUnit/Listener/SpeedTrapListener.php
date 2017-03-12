@@ -16,8 +16,6 @@ class SpeedTrapListener implements TestListener
      *
      * Increments as more suites are run, then decremented as they finish. All
      * suites have been run when returns to 0.
-     *
-     * @var int
      */
     protected $suites = 0;
 
@@ -38,18 +36,11 @@ class SpeedTrapListener implements TestListener
 
     /**
      * Collection of slow tests.
-     * Keys are labels describing the test (string)
-     * Values are total execution time of given test (int)
-     *
-     * @var array
+     * Keys (string) => Printable label describing the test
+     * Values (int) => Test execution time, in milliseconds
      */
     protected $slow = [];
 
-    /**
-     * Construct a new instance.
-     *
-     * @param array $options
-     */
     public function __construct(array $options = [])
     {
         $this->loadOptions($options);
@@ -180,8 +171,7 @@ class SpeedTrapListener implements TestListener
      * Whether the given test execution time is considered slow.
      *
      * @param int $time          Test execution time in milliseconds
-     * @param int $slowThreshold Test execution time at which a test should be considered slow (milliseconds)
-     * @return bool
+     * @param int $slowThreshold Test execution time at which a test should be considered slow, in milliseconds
      */
     protected function isSlow(int $time, int $slowThreshold): bool
     {
@@ -190,9 +180,6 @@ class SpeedTrapListener implements TestListener
 
     /**
      * Stores a test as slow.
-     *
-     * @param TestCase $test
-     * @param int      $time Test execution time in milliseconds
      */
     protected function addSlowTest(TestCase $test, int $time)
     {
@@ -203,8 +190,6 @@ class SpeedTrapListener implements TestListener
 
     /**
      * Whether at least one test has been considered slow.
-     *
-     * @return bool
      */
     protected function hasSlowTests(): bool
     {
@@ -213,9 +198,6 @@ class SpeedTrapListener implements TestListener
 
     /**
      * Convert PHPUnit's reported test time (microseconds) to milliseconds.
-     *
-     * @param float $time
-     * @return int
      */
     protected function toMilliseconds(float $time): int
     {
@@ -224,9 +206,6 @@ class SpeedTrapListener implements TestListener
 
     /**
      * Label describing a test.
-     *
-     * @param TestCase $test
-     * @return string
      */
     protected function makeLabel(TestCase $test): string
     {
@@ -235,8 +214,6 @@ class SpeedTrapListener implements TestListener
 
     /**
      * Calculate number of tests to include in slowness report.
-     *
-     * @return int
      */
     protected function getReportLength(): int
     {
@@ -246,8 +223,6 @@ class SpeedTrapListener implements TestListener
     /**
      * Calculate number of slow tests to be hidden from the slowness report
      * due to list length.
-     *
-     * @return int
      */
     protected function getHiddenCount(): int
     {
@@ -298,8 +273,6 @@ class SpeedTrapListener implements TestListener
 
     /**
      * Populate options into class internals.
-     *
-     * @param array $options
      */
     protected function loadOptions(array $options)
     {
@@ -319,9 +292,6 @@ class SpeedTrapListener implements TestListener
      * \@slowThreshold 5000
      * public function testLongRunningProcess() {}
      * </code>
-     *
-     * @param TestCase $test
-     * @return int
      */
     protected function getSlowThreshold(TestCase $test): int
     {
