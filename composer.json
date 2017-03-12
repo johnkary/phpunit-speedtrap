@@ -16,8 +16,13 @@
         "phpunit/phpunit": "^6.0"
     },
     "autoload": {
-        "psr-0": {
-            "JohnKary": "src/"
+        "psr-4": {
+            "JohnKary\\PHPUnit\\Listener\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "JohnKary\\PHPUnit\\Listener\\Tests\\": "tests/"
         }
     },
     "extra": {
