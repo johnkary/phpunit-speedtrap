@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace JohnKary\PHPUnit\Listener\Tests;
 
@@ -35,7 +36,7 @@ class SomeSlowTest extends TestCase
     /**
      * @dataProvider provideTime
      */
-    public function testWithDataProvider($time)
+    public function testWithDataProvider(int $time)
     {
         $this->extendTime($time);
 
@@ -43,11 +44,11 @@ class SomeSlowTest extends TestCase
     }
     public function provideTime()
     {
-        return array(
-            'Rock' => array(800),
-            'Chalk' => array(700),
-            'Jayhawk' => array(600),
-        );
+        return [
+            'Rock' => [800],
+            'Chalk' => [700],
+            'Jayhawk' => [600],
+        ];
     }
 
     /**
@@ -79,7 +80,7 @@ class SomeSlowTest extends TestCase
     /**
      * @param int $ms Number of additional microseconds to execute code
      */
-    private function extendTime($ms)
+    private function extendTime(int $ms)
     {
         usleep($ms * 1000);
     }

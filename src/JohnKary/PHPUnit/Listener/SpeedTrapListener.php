@@ -1,13 +1,9 @@
 <?php
+declare(strict_types=1);
 
 namespace JohnKary\PHPUnit\Listener;
 
-use PHPUnit\Framework\AssertionFailedError;
-use PHPUnit\Framework\TestSuite;
-use PHPUnit\Framework\Test;
-use PHPUnit\Framework\TestCase;
-use PHPUnit\Framework\TestListener;
-use PHPUnit\Framework\Warning;
+use PHPUnit\Framework\{AssertionFailedError, TestSuite, Test, TestCase, TestListener, Warning};
 
 /**
  * A PHPUnit TestListener that exposes your slowest running tests by outputting
@@ -20,8 +16,6 @@ class SpeedTrapListener implements TestListener
      *
      * Increments as more suites are run, then decremented as they finish. All
      * suites have been run when returns to 0.
-     *
-     * @var int
      */
     protected $suites = 0;
 
@@ -42,19 +36,12 @@ class SpeedTrapListener implements TestListener
 
     /**
      * Collection of slow tests.
-     * Keys are labels describing the test (string)
-     * Values are total execution time of given test (int)
-     *
-     * @var array
+     * Keys (string) => Printable label describing the test
+     * Values (int) => Test execution time, in milliseconds
      */
-    protected $slow = array();
+    protected $slow = [];
 
-    /**
-     * Construct a new instance.
-     *
-     * @param array $options
-     */
-    public function __construct(array $options = array())
+    public function __construct(array $options = [])
     {
         $this->loadOptions($options);
     }
@@ -184,21 +171,17 @@ class SpeedTrapListener implements TestListener
      * Whether the given test execution time is considered slow.
      *
      * @param int $time          Test execution time in milliseconds
-     * @param int $slowThreshold Test execution time at which a test should be considered slow (milliseconds)
-     * @return bool
+     * @param int $slowThreshold Test execution time at which a test should be considered slow, in milliseconds
      */
-    protected function isSlow($time, $slowThreshold)
+    protected function isSlow(int $time, int $slowThreshold): bool
     {
         return $time >= $slowThreshold;
     }
 
     /**
      * Stores a test as slow.
-     *
-     * @param TestCase $test
-     * @param int                         $time Test execution time in milliseconds
      */
-    protected function addSlowTest(TestCase $test, $time)
+    protected function addSlowTest(TestCase $test, int $time)
     {
         $label = $this->makeLabel($test);
 
@@ -207,42 +190,32 @@ class SpeedTrapListener implements TestListener
 
     /**
      * Whether at least one test has been considered slow.
-     *
-     * @return bool
      */
-    protected function hasSlowTests()
+    protected function hasSlowTests(): bool
     {
         return !empty($this->slow);
     }
 
     /**
      * Convert PHPUnit's reported test time (microseconds) to milliseconds.
-     *
-     * @param float $time
-     * @return int
      */
-    protected function toMilliseconds($time)
+    protected function toMilliseconds(float $time): int
     {
         return (int) round($time * 1000);
     }
 
     /**
      * Label describing a test.
-     *
-     * @param TestCase $test
-     * @return string
      */
-    protected function makeLabel(TestCase $test)
+    protected function makeLabel(TestCase $test): string
     {
         return sprintf('%s:%s', get_class($test), $test->getName());
     }
 
     /**
      * Calculate number of tests to include in slowness report.
-     *
-     * @return int
      */
-    protected function getReportLength()
+    protected function getReportLength(): int
     {
         return min(count($this->slow), $this->reportLength);
     }
@@ -250,10 +223,8 @@ class SpeedTrapListener implements TestListener
     /**
      * Calculate number of slow tests to be hidden from the slowness report
      * due to list length.
-     *
-     * @return int
      */
-    protected function getHiddenCount()
+    protected function getHiddenCount(): int
     {
         $total = count($this->slow);
         $showing = $this->getReportLength();
@@ -302,13 +273,11 @@ class SpeedTrapListener implements TestListener
 
     /**
      * Populate options into class internals.
-     *
-     * @param array $options
      */
     protected function loadOptions(array $options)
     {
-        $this->slowThreshold = isset($options['slowThreshold']) ? $options['slowThreshold'] : 500;
-        $this->reportLength = isset($options['reportLength']) ? $options['reportLength'] : 10;
+        $this->slowThreshold = $options['slowThreshold'] ?? 500;
+        $this->reportLength = $options['reportLength'] ?? 10;
     }
 
     /**
@@ -323,14 +292,11 @@ class SpeedTrapListener implements TestListener
      * \@slowThreshold 5000
      * public function testLongRunningProcess() {}
      * </code>
-     *
-     * @param TestCase $test
-     * @return int
      */
-    protected function getSlowThreshold(TestCase $test)
+    protected function getSlowThreshold(TestCase $test): int
     {
         $ann = $test->getAnnotations();
 
-        return isset($ann['method']['slowThreshold'][0]) ? $ann['method']['slowThreshold'][0] : $this->slowThreshold;
+        return isset($ann['method']['slowThreshold'][0]) ? (int) $ann['method']['slowThreshold'][0] : $this->slowThreshold;
     }
 }
