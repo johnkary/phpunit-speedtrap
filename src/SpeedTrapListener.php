@@ -3,13 +3,13 @@ declare(strict_types=1);
 
 namespace JohnKary\PHPUnit\Listener;
 
-use PHPUnit\Framework\{AssertionFailedError, TestSuite, Test, TestCase, TestListener, Warning};
+use PHPUnit\Framework\{AssertionFailedError, TestSuite, Test, TestCase, BaseTestListener, Warning};
 
 /**
  * A PHPUnit TestListener that exposes your slowest running tests by outputting
  * results directly to the console.
  */
-class SpeedTrapListener implements TestListener
+class SpeedTrapListener extends BaseTestListener
 {
     /**
      * Internal tracking for test suites.
@@ -44,81 +44,6 @@ class SpeedTrapListener implements TestListener
     public function __construct(array $options = [])
     {
         $this->loadOptions($options);
-    }
-
-    /**
-     * An error occurred.
-     *
-     * @param Test       $test
-     * @param \Exception $e
-     * @param float      $time
-     */
-    public function addError(Test $test, \Exception $e, $time)
-    {
-    }
-
-    /**
-     * A warning occurred.
-     *
-     * @param Test    $test
-     * @param Warning $e
-     * @param float   $time
-     */
-    public function addWarning(Test $test, Warning $e, $time)
-    {
-    }
-
-    /**
-     * A failure occurred.
-     *
-     * @param Test                 $test
-     * @param AssertionFailedError $e
-     * @param float                $time
-     */
-    public function addFailure(Test $test, AssertionFailedError $e, $time)
-    {
-    }
-
-    /**
-     * Incomplete test.
-     *
-     * @param Test       $test
-     * @param \Exception $e
-     * @param float      $time
-     */
-    public function addIncompleteTest(Test $test, \Exception $e, $time)
-    {
-    }
-
-    /**
-     * Risky test.
-     *
-     * @param Test       $test
-     * @param \Exception $e
-     * @param float      $time
-     */
-    public function addRiskyTest(Test $test, \Exception $e, $time)
-    {
-    }
-
-    /**
-     * Skipped test.
-     *
-     * @param Test       $test
-     * @param \Exception $e
-     * @param float      $time
-     */
-    public function addSkippedTest(Test $test, \Exception $e, $time)
-    {
-    }
-
-    /**
-     * A test started.
-     *
-     * @param Test $test
-     */
-    public function startTest(Test $test)
-    {
     }
 
     /**
