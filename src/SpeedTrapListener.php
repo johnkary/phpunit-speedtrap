@@ -3,9 +3,7 @@ declare(strict_types=1);
 
 namespace JohnKary\PHPUnit\Listener;
 
-use PHPUnit\Framework\{
-    TestListener, TestListenerDefaultImplementation, TestSuite, Test, TestCase
-};
+use PHPUnit\Framework\{TestListener, TestListenerDefaultImplementation, TestSuite, Test, TestCase};
 
 /**
  * A PHPUnit TestListener that exposes your slowest running tests by outputting
