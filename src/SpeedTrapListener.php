@@ -3,14 +3,17 @@ declare(strict_types=1);
 
 namespace JohnKary\PHPUnit\Listener;
 
-use PHPUnit\Framework\{AssertionFailedError, TestSuite, Test, TestCase, BaseTestListener, Warning};
+use PHPUnit\Framework\{TestListener, TestListenerDefaultImplementation, TestSuite, Test, TestCase};
 
 /**
  * A PHPUnit TestListener that exposes your slowest running tests by outputting
  * results directly to the console.
  */
-class SpeedTrapListener extends BaseTestListener
+class SpeedTrapListener implements TestListener
 {
+
+    use TestListenerDefaultImplementation;
+
     /**
      * Internal tracking for test suites.
      *
@@ -52,7 +55,7 @@ class SpeedTrapListener extends BaseTestListener
      * @param Test  $test
      * @param float $time
      */
-    public function endTest(Test $test, $time)
+    public function endTest(Test $test, float $time): void
     {
         if (!$test instanceof TestCase) return;
 
@@ -69,7 +72,7 @@ class SpeedTrapListener extends BaseTestListener
      *
      * @param TestSuite $suite
      */
-    public function startTestSuite(TestSuite $suite)
+    public function startTestSuite(TestSuite $suite): void
     {
         $this->suites++;
     }
@@ -79,7 +82,7 @@ class SpeedTrapListener extends BaseTestListener
      *
      * @param TestSuite $suite
      */
-    public function endTestSuite(TestSuite $suite)
+    public function endTestSuite(TestSuite $suite): void
     {
         $this->suites--;
 
