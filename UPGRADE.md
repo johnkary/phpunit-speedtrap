@@ -1,3 +1,20 @@
+UPGRADE FROM 2.x to 3.0
+=======================
+
+### `JohnKary\PHPUnit\Listener\SpeedTrapListener` subclasses must ensure method signatures match PHPUnit TestListenerDefaultImplementation
+
+SpeedTrapListener was upgraded to support PHPUnit 7.0, which introduced a
+new trait `TestListenerDefaultImplementation` containing a few new scalar type
+hints and void return hints. SpeedTrapListener subclasses overriding any
+of the below methods will require updating the new method signatures:
+
+| Old signature | New signature |
+| -------- | --- |
+| `public function endTest(Test $test, $time)` | `public function endTest(Test $test, float $time): void`
+| `public function startTestSuite(TestSuite $suite)` | `public function startTestSuite(TestSuite $suite): void`
+| `public function endTestSuite(TestSuite $suite)` | `public function endTestSuite(TestSuite $suite): void`
+
+
 UPGRADE FROM 1.x to 2.0
 =======================
 

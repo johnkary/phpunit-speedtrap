@@ -1,11 +1,20 @@
-CHANGELOG for 2.0
+CHANGELOG
 =================
 
 View diff for a specific commit:  
 https://github.com/johnkary/phpunit-speedtrap/commit/XXX where XXX is the commit hash
 
 View diff between two versions:  
-https://github.com/johnkary/phpunit-speedtrap/compare/v1.1.0...v2.0.0
+https://github.com/johnkary/phpunit-speedtrap/compare/v2.0.0...v3.0.0
+
+## 3.0.0 (2018-02-24)
+
+Version 3.0 introduces support for PHPUnit 7.0+ and PHP 7.1+.
+
+Changes may be required if you have extended SpeedTrapListener. See
+[UPGRADE.md](UPGRADE.md) for upgrading your subclass to support 3.0.
+
+* [PR #41](https://github.com/johnkary/phpunit-speedtrap/pull/41) Make compatible with phpunit 7.x
 
 ## 2.0.0 (2017-12-06)
 
