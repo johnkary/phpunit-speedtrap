@@ -2,11 +2,11 @@
 
 [![Build Status](https://travis-ci.org/johnkary/phpunit-speedtrap.svg?branch=master)](https://travis-ci.org/johnkary/phpunit-speedtrap)
 
-SpeedTrap reports on slow-running tests in your PHPUnit test suite right in your console.
+SpeedTrap reports on slow-running PHPUnit tests right in the console.
 
-Many factors affect test execution time. A test not properly isolated from variable latency (database, network, etc.) and even basic load on your test machine will cause test times to fluctuate.
+Many factors affect test execution time. A test not properly isolated from variable latency (database, network, etc.) and even basic load on the test machine will cause test execution times to fluctuate.
 
-SpeedTrap helps you **identify slow tests** but cannot tell you **why** those tests are slow. For that you should check out [Blackfire.io](https://blackfire.io) for easy profiling your test suite, or another PHPUnit listener [PHPUnit\_Listener\_XHProf](https://github.com/sebastianbergmann/phpunit-testlistener-xhprof), to help identify specifically which methods in your call stack are slow.
+SpeedTrap helps **identify slow tests** but cannot explain **why** those tests are slow. For that consider using [Blackfire.io](https://blackfire.io) to profile the test suite, or another PHPUnit listener [PHPUnit\_Listener\_XHProf](https://github.com/sebastianbergmann/phpunit-testlistener-xhprof), to specifically identify slow code.
 
 ![Screenshot of terminal using SpeedTrap](http://i.imgur.com/Zr34giR.png)
 
@@ -19,7 +19,7 @@ SpeedTrap is installable via [Composer](http://getcomposer.org) and should be ad
 
 ## Usage
 
-Enable with all defaults by adding the following to your test suite's `phpunit.xml` file:
+Enable with all defaults by adding the following code to your project's `phpunit.xml` file:
 
 ```xml
 <phpunit bootstrap="vendor/autoload.php">
@@ -30,7 +30,7 @@ Enable with all defaults by adding the following to your test suite's `phpunit.x
 </phpunit>
 ```
 
-Now run your test suite as normal. If tests run that exceed the slowness threshold (500ms by default), SpeedTrap will report on them in the console after the suite completes.
+Now run the test suite as normal. If one or more test executions exceed the slowness threshold (500ms by default), SpeedTrap will report on those tests in the console after all tests have completed.
 
 ## Configuration
 
@@ -62,13 +62,13 @@ These configuration parameters are set in `phpunit.xml` when adding the listener
 </phpunit>
 ```
 
-This allows you to set your own criteria for "slow" tests, and how many you care to know about.
+This allows customizing what the project considers a "slow" test and how many are reported on to project maintainers.
 
-## Custom slow threshold per-test method
+## Custom slowness threshold per-test case
 
-You may have a few tests in your suite that take a little bit longer to run, and want to have a higher slow threshold than the rest of your suite.
+Some projects have a few complex tests that take a long time to run. It is possible to set a different slowness threshold for individual test cases.
 
-You can use the annotation `@slowThreshold` to set a custom slow threshold on a per-test method basis. This number can be higher or lower than the default threshold and will be used in place of the default threshold for that specific test.
+Use the annotation `@slowThreshold` to set a custom slowness threshold for single test cases. This number may be higher or lower than the default threshold and will be used in place of the default threshold for that specific test.
 
 ```php
 class SomeTestCase extends \PHPUnit_Framework_TestCase
@@ -78,7 +78,7 @@ class SomeTestCase extends \PHPUnit_Framework_TestCase
      */
     public function testLongRunningProcess()
     {
-        // Code to exercise your long-running SUT
+        // Code that takes a longer time to execute
     }
 }
 ```
