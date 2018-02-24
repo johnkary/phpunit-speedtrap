@@ -85,7 +85,7 @@ class SomeTestCase extends \PHPUnit_Framework_TestCase
 
 ## Inspiration
 
-This project was inspired by Rspec's `-p` option that displays feedback about slow tests.
+This project was inspired by [RSpec's](https://github.com/rspec/rspec) `--profile` option that displays feedback about slow tests.
 
 ## License
 
