@@ -9,6 +9,7 @@ php:
 
 env:
   - PHPUNIT=7.*
+  - PHPUNIT=dev-master MIN_STABILITY=dev
 
 cache:
   directories:
@@ -16,6 +17,7 @@ cache:
 
 before_script:
   - phpenv config-rm xdebug.ini || true
+  - if [ "$MIN_STABILITY" != "" ]; then composer config minimum-stability $MIN_STABILITY; fi
   - composer require phpunit/phpunit:${PHPUNIT}
 
 script:
