@@ -183,9 +183,14 @@ class SpeedTrapListener implements TestListener
         for ($i = 1; $i <= $length; ++$i) {
             $label = key($slowTests);
             $time = array_shift($slowTests);
+            $seconds = $time/1000;
 
-            echo sprintf(" %s. %sms to run %s\n", $i, $time, $label);
+            echo sprintf(" %s - %ss to run %s\n", $i, $seconds, $this->yellow($label));
         }
+    }
+
+    protected function yellow($string) {
+        return "\e[1;33m $string\033[0m";
     }
 
     /**
@@ -194,7 +199,7 @@ class SpeedTrapListener implements TestListener
     protected function renderFooter()
     {
         if ($hidden = $this->getHiddenCount()) {
-            echo sprintf("...and there %s %s more above your threshold hidden from view", $hidden == 1 ? 'is' : 'are', $hidden);
+            echo sprintf("and there %s %s more above your threshold hidden from view.", $hidden == 1 ? 'is' : 'are', $hidden);
         }
     }
 
