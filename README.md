@@ -71,7 +71,7 @@ Some projects have a few complex tests that take a long time to run. It is possi
 Use the annotation `@slowThreshold` to set a custom slowness threshold for single test cases. This number may be higher or lower than the default threshold and will be used in place of the default threshold for that specific test.
 
 ```php
-class SomeTestCase extends \PHPUnit_Framework_TestCase
+class SomeTestCase extends PHPUnit\Framework\TestCase
 {
     /**
      * @slowThreshold 5000
