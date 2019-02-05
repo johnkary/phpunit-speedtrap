@@ -13,8 +13,11 @@ env:
   - PHPUNIT=dev-master MIN_STABILITY=dev
 
 matrix:
-  allow_failures:
-    - env: PHPUNIT=dev-master MIN_STABILITY=dev
+  exclude:
+  - php: 7.1
+    env: PHPUNIT=8.*
+  - php: 7.1
+    env: PHPUNIT=dev-master MIN_STABILITY=dev
 
 cache:
   directories:
