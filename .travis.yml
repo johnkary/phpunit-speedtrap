@@ -5,11 +5,16 @@ sudo: false
 php:
   - 7.1
   - 7.2
-  - nightly
+  - 7.3
 
 env:
   - PHPUNIT=7.*
+  - PHPUNIT=8.*
   - PHPUNIT=dev-master MIN_STABILITY=dev
+
+matrix:
+  allow_failures:
+    - env: PHPUNIT=dev-master MIN_STABILITY=dev
 
 cache:
   directories:
