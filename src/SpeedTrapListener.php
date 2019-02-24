@@ -58,11 +58,11 @@ class SpeedTrapListener implements TestListener
     {
         if (!$test instanceof TestCase) return;
 
-        $time = $this->toMilliseconds($time);
+        $timeInMilliseconds = $this->toMilliseconds($time);
         $threshold = $this->getSlowThreshold($test);
 
-        if ($this->isSlow($time, $threshold)) {
-            $this->addSlowTest($test, $time);
+        if ($this->isSlow($timeInMilliseconds, $threshold)) {
+            $this->addSlowTest($test, $timeInMilliseconds);
         }
     }
 
