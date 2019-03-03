@@ -34,8 +34,10 @@ Now run the test suite as normal. If one or more test executions exceed the slow
 
 ## Configuration
 
-SpeedTrap has two configurable parameters:
+SpeedTrap has some configurable parameters:
 
+* **outPath** - File path of the report output (Default: php://stdout)
+* **forceFlush** - Boolean flag for flushing after every written lines (Default: false)
 * **slowThreshold** - Number of milliseconds a test takes to execute before being considered "slow" (Default: 500ms)
 * **reportLength** - Number of slow tests included in the report (Default: 10 tests)
 
@@ -49,6 +51,12 @@ These configuration parameters are set in `phpunit.xml` when adding the listener
         <listener class="JohnKary\PHPUnit\Listener\SpeedTrapListener">
             <arguments>
                 <array>
+                    <element key="outPath">
+                        <string>php://stderr</string>
+                    </element>
+                    <element key="forceFlush">
+                        <boolean>true</boolean>
+                    </element>
                     <element key="slowThreshold">
                         <integer>500</integer>
                     </element>

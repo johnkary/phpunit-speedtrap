@@ -24,6 +24,12 @@
         <listener class="JohnKary\PHPUnit\Listener\SpeedTrapListener">
             <arguments>
                 <array>
+                    <element key="outPath">
+                        <string>php://stderr</string>
+                    </element>
+                    <element key="forceFlush">
+                        <boolean>true</boolean>
+                    </element>
                     <element key="slowThreshold">
                         <integer>500</integer>
                     </element>
