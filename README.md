@@ -38,6 +38,7 @@ SpeedTrap has two configurable parameters:
 
 * **slowThreshold** - Number of milliseconds a test takes to execute before being considered "slow" (Default: 500ms)
 * **reportLength** - Number of slow tests included in the report (Default: 10 tests)
+* **failOnFirst** - Fail out on the first slow test detected rather than continuing to run (Default: false)
 
 These configuration parameters are set in `phpunit.xml` when adding the listener:
 
@@ -54,6 +55,9 @@ These configuration parameters are set in `phpunit.xml` when adding the listener
                     </element>
                     <element key="reportLength">
                         <integer>5</integer>
+                    </element>
+                    <element key="failOnFirst">
+                        <boolean>true</boolean>
                     </element>
                 </array>
             </arguments>

@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace JohnKary\PHPUnit\Listener;
 
+use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\{TestListener, TestListenerDefaultImplementation, TestSuite, Test, TestCase};
 
 /**
@@ -12,6 +13,13 @@ use PHPUnit\Framework\{TestListener, TestListenerDefaultImplementation, TestSuit
 class SpeedTrapListener implements TestListener
 {
     use TestListenerDefaultImplementation;
+
+    /**
+     * Fail on the first slow test instead of letting the suite continue.
+     *
+     * @var boolean
+     */
+    protected $failOnFirst = false;
 
     /**
      * Internal tracking for test suites.
@@ -63,6 +71,13 @@ class SpeedTrapListener implements TestListener
 
         if ($this->isSlow($timeInMilliseconds, $threshold)) {
             $this->addSlowTest($test, $timeInMilliseconds);
+
+            if ($this->failOnFirst) {
+
+                $this->render();
+
+                $test->fail('Speed Trap detected a slow test and you\'ve asked it to fail upon the first occurrence. (option: failOnFirst)');
+            }
         }
     }
 
@@ -88,9 +103,7 @@ class SpeedTrapListener implements TestListener
         if (0 === $this->suites && $this->hasSlowTests()) {
             arsort($this->slow); // Sort longest running tests to the top
 
-            $this->renderHeader();
-            $this->renderBody();
-            $this->renderFooter();
+            $this->render();
         }
     }
 
@@ -164,6 +177,13 @@ class SpeedTrapListener implements TestListener
         return $hidden;
     }
 
+    protected function render()
+    {
+        $this->renderHeader();
+        $this->renderBody();
+        $this->renderFooter();
+    }
+
     /**
      * Renders slowness report header.
      */
@@ -205,6 +225,7 @@ class SpeedTrapListener implements TestListener
     {
         $this->slowThreshold = $options['slowThreshold'] ?? 500;
         $this->reportLength = $options['reportLength'] ?? 10;
+        $this->failOnFirst = $options['failOnFirst'] ?? false;
     }
 
     /**
