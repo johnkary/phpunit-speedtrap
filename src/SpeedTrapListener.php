@@ -3,16 +3,18 @@ declare(strict_types=1);
 
 namespace JohnKary\PHPUnit\Listener;
 
-use PHPUnit\Framework\{TestListener, TestListenerDefaultImplementation, TestSuite, Test, TestCase};
+use PHPUnit\Framework\TestCase;
+use PHPUnit\Runner\AfterLastTestHook;
+use PHPUnit\Runner\AfterSuccessfulTestHook;
+use PHPUnit\Runner\BeforeFirstTestHook;
+use PHPUnit\Util\Test as UtilTest;
 
 /**
- * A PHPUnit TestListener that exposes your slowest running tests by outputting
+ * A PHPUnit TestHook that exposes your slowest running tests by outputting
  * results directly to the console.
  */
-class SpeedTrapListener implements TestListener
+class SpeedTrapListener implements AfterSuccessfulTestHook, BeforeFirstTestHook, AfterLastTestHook
 {
-    use TestListenerDefaultImplementation;
-
     /**
      * Internal tracking for test suites.
      *
@@ -49,15 +51,13 @@ class SpeedTrapListener implements TestListener
     }
 
     /**
-     * A test ended.
+     * A test successfully ended.
      *
-     * @param Test  $test
-     * @param float $time
+     * @param string $test
+     * @param float  $time
      */
-    public function endTest(Test $test, float $time): void
+    public function executeAfterSuccessfulTest(string $test, float $time): void
     {
-        if (!$test instanceof TestCase) return;
-
         $timeInMilliseconds = $this->toMilliseconds($time);
         $threshold = $this->getSlowThreshold($test);
 
@@ -68,20 +68,16 @@ class SpeedTrapListener implements TestListener
 
     /**
      * A test suite started.
-     *
-     * @param TestSuite $suite
      */
-    public function startTestSuite(TestSuite $suite): void
+    public function executeBeforeFirstTest(): void
     {
         $this->suites++;
     }
 
     /**
      * A test suite ended.
-     *
-     * @param TestSuite $suite
      */
-    public function endTestSuite(TestSuite $suite): void
+    public function executeAfterLastTest(): void
     {
         $this->suites--;
 
@@ -108,11 +104,9 @@ class SpeedTrapListener implements TestListener
     /**
      * Stores a test as slow.
      */
-    protected function addSlowTest(TestCase $test, int $time)
+    protected function addSlowTest($test, int $time)
     {
-        $label = $this->makeLabel($test);
-
-        $this->slow[$label] = $time;
+        $this->slow[$test] = $time;
     }
 
     /**
@@ -220,9 +214,10 @@ class SpeedTrapListener implements TestListener
      * public function testLongRunningProcess() {}
      * </code>
      */
-    protected function getSlowThreshold(TestCase $test): int
+    protected function getSlowThreshold(string $test): int
     {
-        $ann = $test->getAnnotations();
+        $call = explode('::', $test);
+        $ann  = UtilTest::parseTestMethodAnnotations($call[0], $call[1]);
 
         return isset($ann['method']['slowThreshold'][0]) ? (int) $ann['method']['slowThreshold'][0] : $this->slowThreshold;
     }

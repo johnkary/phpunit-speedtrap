@@ -21,6 +21,18 @@ SpeedTrap is installable via [Composer](http://getcomposer.org) and should be ad
 
 Enable with all defaults by adding the following code to your project's `phpunit.xml` file:
 
+If you are using PHPUnit 8 or above, and phpunit-speedtrap >= 4.0.0, you should register the listener like this:
+ 
+```xml
+<phpunit bootstrap="vendor/autoload.php">
+...
+    <extensions>
+        <extension class="JohnKary\PHPUnit\Listener\SpeedTrapListener" />
+    </extensions>
+</phpunit>
+```
+Otherwise you can add the following:
+ 
 ```xml
 <phpunit bootstrap="vendor/autoload.php">
 ...
@@ -45,8 +57,8 @@ These configuration parameters are set in `phpunit.xml` when adding the listener
 <phpunit bootstrap="vendor/autoload.php">
     <!-- ... other suite configuration here ... -->
 
-    <listeners>
-        <listener class="JohnKary\PHPUnit\Listener\SpeedTrapListener">
+    <extensions>
+        <extension class="JohnKary\PHPUnit\Listener\SpeedTrapListener">
             <arguments>
                 <array>
                     <element key="slowThreshold">
@@ -57,8 +69,8 @@ These configuration parameters are set in `phpunit.xml` when adding the listener
                     </element>
                 </array>
             </arguments>
-        </listener>
-    </listeners>
+        </extension>
+    </extensions>
 </phpunit>
 ```
 

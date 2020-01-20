@@ -7,6 +7,10 @@ https://github.com/johnkary/phpunit-speedtrap/commit/XXX where XXX is the commit
 View diff between two versions:  
 https://github.com/johnkary/phpunit-speedtrap/compare/v3.1.0...v3.2.0
 
+## Master
+
+* [PR #67](https://github.com/johnkary/phpunit-speedtrap/pull/67) Handle deprecated TestListener in PHPUnit 8
+
 ## 3.2.0 (2020-02-12)
 
 Version 3.2 introduces supports for PHPUnit 9.0+.

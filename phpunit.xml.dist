@@ -20,8 +20,8 @@
         </testsuite>
     </testsuites>
 
-    <listeners>
-        <listener class="JohnKary\PHPUnit\Listener\SpeedTrapListener">
+    <extensions>
+        <extension class="JohnKary\PHPUnit\Listener\SpeedTrapListener">
             <arguments>
                 <array>
                     <element key="slowThreshold">
@@ -32,8 +32,8 @@
                     </element>
                 </array>
             </arguments>
-        </listener>
-    </listeners>
+        </extension>
+    </extensions>
 
     <filter>
         <whitelist>
