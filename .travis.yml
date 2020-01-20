@@ -18,6 +18,8 @@ matrix:
     env: PHPUNIT=8.*
   - php: 7.1
     env: PHPUNIT=dev-master MIN_STABILITY=dev
+  - php: 7.2
+    env: PHPUNIT=dev-master MIN_STABILITY=dev
   allow_failures:
   - php: nightly
 
