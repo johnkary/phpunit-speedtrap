@@ -1,7 +1,7 @@
 {
     "name": "johnkary/phpunit-speedtrap",
     "type": "library",
-    "description": "Find slow tests in your PHPUnit test suite",
+    "description": "Find and report on slow tests in your PHPUnit test suite",
     "keywords": [
         "PHPUnit",
         "slow",
