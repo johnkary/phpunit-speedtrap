@@ -4,12 +4,13 @@ php:
   - 7.1
   - 7.2
   - 7.3
-  - 7.4snapshot
+  - 7.4
   - nightly
 
 env:
   - PHPUNIT=7.*
   - PHPUNIT=8.*
+  - PHPUNIT=9.*
   - PHPUNIT=dev-master MIN_STABILITY=dev
 
 matrix:
@@ -17,6 +18,12 @@ matrix:
   - php: 7.1
     env: PHPUNIT=8.*
   - php: 7.1
+    env: PHPUNIT=9.*
+  - php: 7.1
+    env: PHPUNIT=dev-master MIN_STABILITY=dev
+  - php: 7.2
+    env: PHPUNIT=9.*
+  - php: 7.2
     env: PHPUNIT=dev-master MIN_STABILITY=dev
   allow_failures:
   - php: nightly
