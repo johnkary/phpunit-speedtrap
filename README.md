@@ -122,7 +122,7 @@ Step 3) View the Travis CI build output and read the slowness report printed in 
 
 [Travis CI Documentation - Environment Variables](https://docs.travis-ci.com/user/environment-variables)
 
-#### Use case: Enable profiling in development, but enable with Travis CI
+#### Use case: Enable profiling in development, but disable with Travis CI
 
 Step 1) Enable SpeedTrapListener in phpunit.xml. The slowness report will output during all test suite executions.
 
@@ -150,6 +150,8 @@ env:
 Step 3) View the Travis CI build output and confirm the slowness report is not printed in the console.
 
 #### Use case: Only enable SpeedTrapListener on demand via command-line
+
+Useful when you only want to profile slow tests once in a while.
 
 Step 1) Setup phpunit.xml to enable SpeedTrapListener, but disable slowness profiling by setting `PHPUNIT_SPEEDTRAP="disabled"` like this:
 
