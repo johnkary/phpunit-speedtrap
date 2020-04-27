@@ -14,7 +14,7 @@ class SomeSlowTest extends TestCase
 
     public function testSlowTests()
     {
-        $this->extendTime(300);
+        $this->extendTime(1300);
 
         $this->assertTrue(true);
     }
