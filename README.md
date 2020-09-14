@@ -174,6 +174,18 @@ Step 2) When executing `phpunit` from the command-line, enable slowness profilin
 $ PHPUNIT_SPEEDTRAP=enabled ./vendor/bin/phpunit
 ```
 
+## Using with Symfony Framework
+
+**Executing `vendor/bin/simple-phpunit` will not work while PHPUnit SpeedTrap is installed.**
+
+**Use the PHPUnit binary `vendor/bin/phpunit` while PHPUnit SpeedTrap is installed.**
+
+[Symfony Framework](https://symfony.com/) comes with package [symfony/phpunit-bridge](https://packagist.org/packages/symfony/phpunit-bridge) that installs its own version of PHPUnit and **ignores** what is defined in your project's composer.json or composer.lock file. See the PHPUnit versions it installs with command `ls vendor/bin/.phpunit/`
+
+symfony/phpunit-bridge allows environment variable `SYMFONY_PHPUNIT_VERSION` to define the PHPUnit version it uses. However, this appears incompatible with PHPUnit SpeedTrap.
+
+Please submit a PR if you have a solution!
+
 ## Inspiration
 
 SpeedTrap was inspired by [RSpec's](https://github.com/rspec/rspec) `--profile` option that displays feedback about slow tests.
