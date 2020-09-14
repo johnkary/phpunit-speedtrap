@@ -83,6 +83,18 @@ class SomeTestCase extends \PHPUnit_Framework_TestCase
 }
 ```
 
+## Using with Symfony Framework
+
+**You cannot execute `vendor/bin/simple-phpunit` while PHPUnit SpeedTrap is installed.**
+
+**You must use the normal PHPUnit binary `vendor/bin/phpunit` to run your test suite.**
+
+[Symfony Framework](https://symfony.com/) comes with package [symfony/phpunit-bridge](https://packagist.org/packages/symfony/phpunit-bridge) that installs its own version of PHPUnit and **ignores** what is defined in your project's composer.json or composer.lock file. See the PHPUnit versions it installs with command `ls vendor/bin/.phpunit/`
+
+While symfony/phpunit-bridge provides an environment variable `SYMFONY_PHPUNIT_VERSION` to define which PHPUnit version it should install and use, this still appears to be incompatible with PHPUnit SpeedTrap.
+
+Please submit a PR if you have a better solution.
+
 ## Inspiration
 
 This project was inspired by [RSpec's](https://github.com/rspec/rspec) `--profile` option that displays feedback about slow tests.
