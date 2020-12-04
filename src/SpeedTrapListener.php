@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace JohnKary\PHPUnit\Listener;
 
 use PHPUnit\Framework\{TestListener, TestListenerDefaultImplementation, TestSuite, Test, TestCase};
+use PHPUnit\Util\Test as TestUtil;
 
 /**
  * A PHPUnit TestListener that exposes your slowest running tests by outputting
@@ -222,7 +223,10 @@ class SpeedTrapListener implements TestListener
      */
     protected function getSlowThreshold(TestCase $test): int
     {
-        $ann = $test->getAnnotations();
+        $ann = TestUtil::parseTestMethodAnnotations(
+            get_class($test),
+            $test->getName(false)
+        );
 
         return isset($ann['method']['slowThreshold'][0]) ? (int) $ann['method']['slowThreshold'][0] : $this->slowThreshold;
     }
