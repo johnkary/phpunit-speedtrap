@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace JohnKary\PHPUnit\Listener;
 
+use PHPUnit\Util\Test as TestUtil;
 use PHPUnit\Framework\{TestListener, TestListenerDefaultImplementation, TestSuite, Test, TestCase};
 
 /**
@@ -240,7 +241,7 @@ class SpeedTrapListener implements TestListener
      */
     protected function getSlowThreshold(TestCase $test): int
     {
-        $ann = $test->getAnnotations();
+        $ann = TestUtil::parseTestMethodAnnotations(get_class($test), $test->getName());
 
         return isset($ann['method']['slowThreshold'][0]) ? (int) $ann['method']['slowThreshold'][0] : $this->slowThreshold;
     }
