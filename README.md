@@ -1,6 +1,6 @@
 # phpunit-speedtrap
 
-[![Build Status](https://travis-ci.org/johnkary/phpunit-speedtrap.svg?branch=master)](https://travis-ci.org/johnkary/phpunit-speedtrap)
+[![Integrate](https://github.com/johnkary/phpunit-speedtrap/workflows/Integrate/badge.svg?branch=master)](https://github.com/johnkary/phpunit-speedtrap/actions)
 
 SpeedTrap reports on slow-running PHPUnit tests right in the console.
 
