@@ -155,7 +155,7 @@ class SpeedTrapListener implements TestListener
      */
     protected function makeLabel(TestCase $test): string
     {
-        return sprintf('%s:%s', get_class($test), $test->getName());
+        return sprintf('%s::%s', get_class($test), $test->getName());
     }
 
     /**
