@@ -53,7 +53,7 @@ Each parameter is set in `phpunit.xml`:
                         <integer>500</integer>
                     </element>
                     <element key="reportLength">
-                        <integer>5</integer>
+                        <integer>10</integer>
                     </element>
                 </array>
             </arguments>
