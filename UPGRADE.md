@@ -1,3 +1,29 @@
+UPGRADE FROM 3.x to 4.0
+=======================
+
+### Slowness report changes formatting of slow class names
+
+Prior to 4.0 the slowness report displayed the qualified class name in a
+human-readable format as normally seen in code:
+
+    1. 800ms to run JohnKary\PHPUnit\Listener\Tests\SomeSlowTest:testWithDataProvider with data set "Rock"
+
+After 4.0 the slowness report displays class names in a format ready to be
+used with PHPUnit's [--filter option](https://phpunit.readthedocs.io/en/9.5/textui.html?highlight=filter)
+by adding slashes to the namespace delimiter and adding a colon between the
+class and method name:
+
+    1. 800ms to run JohnKary\\PHPUnit\\Listener\\Tests\\SomeSlowTest::testWithDataProvider with data set "Rock"
+
+An individual slow test case can now be re-run by copying and pasting the output
+into a new command:
+
+    vendor/bin/phpunit --filter 'JohnKary\\PHPUnit\\Listener\\Tests\\SomeSlowTest::testWithDataProvider with data set "Rock"'
+
+Note that PHPUnit uses single quotes for the `--filter` option value. See the
+[--filter option documentation](https://phpunit.readthedocs.io/en/9.5/textui.html?highlight=filter)
+for all supported matching patterns.
+
 UPGRADE FROM 2.x to 3.0
 =======================
 

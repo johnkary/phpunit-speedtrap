@@ -151,11 +151,14 @@ class SpeedTrapListener implements TestListener
     }
 
     /**
-     * Label describing a test.
+     * Label describing a slow test case. Formatted to support copy/paste with
+     * PHPUnit's --filter CLI option:
+     *
+     *     vendor/bin/phpunit --filter 'JohnKary\\PHPUnit\\Listener\\Tests\\SomeSlowTest::testWithDataProvider with data set "Rock"'
      */
     protected function makeLabel(TestCase $test): string
     {
-        return sprintf('%s::%s', get_class($test), $test->getName());
+        return sprintf('%s::%s', addslashes(get_class($test)), $test->getName());
     }
 
     /**
