@@ -8,7 +8,7 @@ Many factors affect test execution time. A test not properly isolated from varia
 
 SpeedTrap helps **identify slow tests** but cannot explain **why** those tests are slow. For that consider using [Blackfire.io](https://blackfire.io) to profile the test suite, or another PHPUnit listener [PHPUnit\_Listener\_XHProf](https://github.com/sebastianbergmann/phpunit-testlistener-xhprof), to specifically identify slow code.
 
-![Screenshot of terminal using SpeedTrap](http://i.imgur.com/Zr34giR.png)
+![Screenshot of terminal using SpeedTrap](https://i.imgur.com/xSpWL4Z.png)
 
 ## Installation
 
