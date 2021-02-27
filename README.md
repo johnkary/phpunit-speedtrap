@@ -186,6 +186,22 @@ symfony/phpunit-bridge allows environment variable `SYMFONY_PHPUNIT_VERSION` to 
 
 Please submit a PR if you have a solution!
 
+## Development
+
+Follow these steps to add new features or develop your own fork:
+
+```
+# Get source code (or replace with your fork URL)
+$ git checkout https://github.com/johnkary/phpunit-speedtrap.git phpunit-speedtrap
+
+# Install dev dependencies
+$ cd phpunit-speedtrap
+$ composer install
+
+# Run test suite to verify code runs as expected
+$ vendor/bin/phpunit
+```
+
 ## Inspiration
 
 SpeedTrap was inspired by [RSpec's](https://github.com/rspec/rspec) `--profile` option that displays feedback about slow tests.
