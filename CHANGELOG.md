@@ -9,7 +9,7 @@ https://github.com/johnkary/phpunit-speedtrap/compare/v3.3.0...v4.0.0
 
 ## 4.0 (xxxx-xx-xx)
 
-
+* New option `stopOnSlow` stops execution upon first slow test. Default: false.
 
 ## 3.3.0 (2020-12-18)
 
