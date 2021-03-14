@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace JohnKary\PHPUnit\Listener;
 
-use PHPUnit\Framework\TestCase;
 use PHPUnit\Runner\AfterLastTestHook;
 use PHPUnit\Runner\AfterSuccessfulTestHook;
 use PHPUnit\Runner\BeforeFirstTestHook;
