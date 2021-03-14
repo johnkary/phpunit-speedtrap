@@ -168,6 +168,11 @@ class SpeedTrapListener implements AfterSuccessfulTestHook, BeforeFirstTestHook,
     {
         list($class, $testName) = explode('::', $test);
 
+        // Remove argument list from end of string that is appended
+        // by default \PHPUnit\Framework\TestCase->toString() so slowness report
+        // output compatible with phpunit --filter flag
+        $testName = preg_replace('/\s\(.*\)$/', '', $testName);
+
         return sprintf('%s::%s', addslashes($class), $testName);
     }
 
