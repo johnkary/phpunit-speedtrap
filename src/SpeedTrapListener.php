@@ -49,14 +49,6 @@ class SpeedTrapListener implements AfterSuccessfulTestHook, BeforeFirstTestHook,
     protected $reportLength;
 
     /**
-     * Whether the test runner should halt running additional tests after
-     * finding a slow test.
-     *
-     * @var bool
-     */
-    protected $stopOnSlow;
-
-    /**
      * Collection of slow tests.
      * Keys (string) => Printable label describing the test
      * Values (int) => Test execution time, in milliseconds
@@ -135,10 +127,6 @@ class SpeedTrapListener implements AfterSuccessfulTestHook, BeforeFirstTestHook,
         $label = $this->makeLabel($test);
 
         $this->slow[$label] = $time;
-
-        if ($this->stopOnSlow) {
-            $test->getTestResultObject()->stop();
-        }
     }
 
     /**
@@ -241,7 +229,6 @@ class SpeedTrapListener implements AfterSuccessfulTestHook, BeforeFirstTestHook,
     {
         $this->slowThreshold = $options['slowThreshold'] ?? 500;
         $this->reportLength = $options['reportLength'] ?? 10;
-        $this->stopOnSlow = $options['stopOnSlow'] ?? false;
     }
 
     /**

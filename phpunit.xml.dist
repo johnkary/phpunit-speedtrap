@@ -30,9 +30,6 @@
                     <element key="reportLength">
                         <integer>5</integer>
                     </element>
-                    <element key="stopOnSlow">
-                        <boolean>false</boolean>
-                    </element>
                 </array>
             </arguments>
         </extension>
