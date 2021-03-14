@@ -131,7 +131,7 @@ class SpeedTrapListener implements AfterSuccessfulTestHook, BeforeFirstTestHook,
     /**
      * Stores a test as slow.
      */
-    protected function addSlowTest($test, int $time)
+    protected function addSlowTest(string $test, int $time)
     {
         $label = $this->makeLabel($test);
 
