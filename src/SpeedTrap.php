@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace JohnKary\PHPUnit\Listener;
+namespace JohnKary\PHPUnit\Extension;
 
 use PHPUnit\Runner\AfterLastTestHook;
 use PHPUnit\Runner\AfterSuccessfulTestHook;
@@ -9,10 +9,10 @@ use PHPUnit\Runner\BeforeFirstTestHook;
 use PHPUnit\Util\Test as TestUtil;
 
 /**
- * A PHPUnit TestHook that exposes your slowest running tests by outputting
+ * A PHPUnit Extension that exposes your slowest running tests by outputting
  * results directly to the console.
  */
-class SpeedTrapListener implements AfterSuccessfulTestHook, BeforeFirstTestHook, AfterLastTestHook
+class SpeedTrap implements AfterSuccessfulTestHook, BeforeFirstTestHook, AfterLastTestHook
 {
     /**
      * Slowness profiling enabled by default. Set to false to disable profiling
@@ -149,7 +149,7 @@ class SpeedTrapListener implements AfterSuccessfulTestHook, BeforeFirstTestHook,
      * Label describing a slow test case. Formatted to support copy/paste with
      * PHPUnit's --filter CLI option:
      *
-     *     vendor/bin/phpunit --filter 'JohnKary\\PHPUnit\\Listener\\Tests\\SomeSlowTest::testWithDataProvider with data set "Rock"'
+     *     vendor/bin/phpunit --filter 'JohnKary\\PHPUnit\\Extension\\Tests\\SomeSlowTest::testWithDataProvider with data set "Rock"'
      */
     protected function makeLabel(string $test): string
     {

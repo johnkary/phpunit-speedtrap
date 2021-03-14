@@ -26,12 +26,12 @@
     },
     "autoload": {
         "psr-4": {
-            "JohnKary\\PHPUnit\\Listener\\": "src/"
+            "JohnKary\\PHPUnit\\Extension\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "JohnKary\\PHPUnit\\Listener\\Tests\\": "tests/"
+            "JohnKary\\PHPUnit\\Extension\\Tests\\": "tests/"
         }
     }
 }

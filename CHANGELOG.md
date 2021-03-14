@@ -18,10 +18,6 @@ Version 3.3 adds supports for PHPUnit 9.5+, and a way to enable or disable the S
 * [PR #73](https://github.com/johnkary/phpunit-speedtrap/pull/73) Compatibility with PHPUnit 9.5
 * [PR #66](https://github.com/johnkary/phpunit-speedtrap/pull/66) Environment variable PHPUNIT_SPEEDTRAP="disabled" can disable profiling
 
-## Master
-
-* [PR #67](https://github.com/johnkary/phpunit-speedtrap/pull/67) Handle deprecated TestListener in PHPUnit 8
-
 ## 3.2.0 (2020-02-12)
 
 Version 3.2 introduces supports for PHPUnit 9.0+.

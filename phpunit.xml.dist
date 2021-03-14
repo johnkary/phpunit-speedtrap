@@ -21,7 +21,7 @@
     </testsuites>
 
     <extensions>
-        <extension class="JohnKary\PHPUnit\Listener\SpeedTrapListener">
+        <extension class="JohnKary\PHPUnit\Extension\SpeedTrap">
             <arguments>
                 <array>
                     <element key="slowThreshold">
