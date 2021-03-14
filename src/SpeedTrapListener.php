@@ -164,7 +164,7 @@ class SpeedTrapListener implements AfterSuccessfulTestHook, BeforeFirstTestHook,
      *
      *     vendor/bin/phpunit --filter 'JohnKary\\PHPUnit\\Listener\\Tests\\SomeSlowTest::testWithDataProvider with data set "Rock"'
      */
-    protected function makeLabel($test): string
+    protected function makeLabel(string $test): string
     {
         $call = explode('::', $test);
 
