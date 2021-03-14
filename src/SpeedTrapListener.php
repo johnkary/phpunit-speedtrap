@@ -166,9 +166,9 @@ class SpeedTrapListener implements AfterSuccessfulTestHook, BeforeFirstTestHook,
      */
     protected function makeLabel(string $test): string
     {
-        $call = explode('::', $test);
+        list($class, $testName) = explode('::', $test);
 
-        return sprintf('%s::%s', addslashes($call[0]), $call[1]);
+        return sprintf('%s::%s', addslashes($class), $testName);
     }
 
     /**
@@ -255,8 +255,8 @@ class SpeedTrapListener implements AfterSuccessfulTestHook, BeforeFirstTestHook,
      */
     protected function getSlowThreshold(string $test): int
     {
-        $call = explode('::', $test);
-        $ann = TestUtil::parseTestMethodAnnotations($call[0], $call[1]);
+        list($class, $testName) = explode('::', $test);
+        $ann = TestUtil::parseTestMethodAnnotations($class, $testName);
 
         return isset($ann['method']['slowThreshold'][0]) ? (int) $ann['method']['slowThreshold'][0] : $this->slowThreshold;
     }
