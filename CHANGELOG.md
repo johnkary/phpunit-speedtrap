@@ -5,7 +5,18 @@ View diff for a specific commit:
 https://github.com/johnkary/phpunit-speedtrap/commit/XXX where XXX is the commit hash
 
 View diff between two versions:  
-https://github.com/johnkary/phpunit-speedtrap/compare/v3.1.0...v3.2.0
+https://github.com/johnkary/phpunit-speedtrap/compare/v3.3.0...v4.0.0
+
+## 4.0 (xxxx-xx-xx)
+
+* New option `stopOnSlow` stops execution upon first slow test. Default: false.
+
+## 3.3.0 (2020-12-18)
+
+Version 3.3 adds supports for PHPUnit 9.5+, and a way to enable or disable the SpeedTrap listener using environment variables.
+
+* [PR #73](https://github.com/johnkary/phpunit-speedtrap/pull/73) Compatibility with PHPUnit 9.5
+* [PR #66](https://github.com/johnkary/phpunit-speedtrap/pull/66) Environment variable PHPUNIT_SPEEDTRAP="disabled" can disable profiling
 
 ## Master
 

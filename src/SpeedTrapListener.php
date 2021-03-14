@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 use PHPUnit\Runner\AfterLastTestHook;
 use PHPUnit\Runner\AfterSuccessfulTestHook;
 use PHPUnit\Runner\BeforeFirstTestHook;
-use PHPUnit\Util\Test as UtilTest;
+use PHPUnit\Util\Test as TestUtil;
 
 /**
  * A PHPUnit TestHook that exposes your slowest running tests by outputting
@@ -15,6 +15,17 @@ use PHPUnit\Util\Test as UtilTest;
  */
 class SpeedTrapListener implements AfterSuccessfulTestHook, BeforeFirstTestHook, AfterLastTestHook
 {
+    /**
+     * Slowness profiling enabled by default. Set to false to disable profiling
+     * and reporting.
+     *
+     * Use environment variable "PHPUNIT_SPEEDTRAP" set to value "disabled" to
+     * disable profiling.
+     *
+     * @var boolean
+     */
+    protected $enabled = true;
+
     /**
      * Internal tracking for test suites.
      *
@@ -39,6 +50,14 @@ class SpeedTrapListener implements AfterSuccessfulTestHook, BeforeFirstTestHook,
     protected $reportLength;
 
     /**
+     * Whether the test runner should halt running additional tests after
+     * finding a slow test.
+     *
+     * @var bool
+     */
+    protected $stopOnSlow;
+
+    /**
      * Collection of slow tests.
      * Keys (string) => Printable label describing the test
      * Values (int) => Test execution time, in milliseconds
@@ -47,6 +66,8 @@ class SpeedTrapListener implements AfterSuccessfulTestHook, BeforeFirstTestHook,
 
     public function __construct(array $options = [])
     {
+        $this->enabled = getenv('PHPUNIT_SPEEDTRAP') === 'disabled' ? false : true;
+
         $this->loadOptions($options);
     }
 
@@ -58,6 +79,8 @@ class SpeedTrapListener implements AfterSuccessfulTestHook, BeforeFirstTestHook,
      */
     public function executeAfterSuccessfulTest(string $test, float $time): void
     {
+        if (!$this->enabled) return;
+
         $timeInMilliseconds = $this->toMilliseconds($time);
         $threshold = $this->getSlowThreshold($test);
 
@@ -71,6 +94,8 @@ class SpeedTrapListener implements AfterSuccessfulTestHook, BeforeFirstTestHook,
      */
     public function executeBeforeFirstTest(): void
     {
+        if (!$this->enabled) return;
+
         $this->suites++;
     }
 
@@ -79,6 +104,8 @@ class SpeedTrapListener implements AfterSuccessfulTestHook, BeforeFirstTestHook,
      */
     public function executeAfterLastTest(): void
     {
+        if (!$this->enabled) return;
+
         $this->suites--;
 
         if (0 === $this->suites && $this->hasSlowTests()) {
@@ -106,7 +133,13 @@ class SpeedTrapListener implements AfterSuccessfulTestHook, BeforeFirstTestHook,
      */
     protected function addSlowTest($test, int $time)
     {
-        $this->slow[$test] = $time;
+        $label = $this->makeLabel($test);
+
+        $this->slow[$label] = $time;
+
+        if ($this->stopOnSlow) {
+            $test->getTestResultObject()->stop();
+        }
     }
 
     /**
@@ -126,11 +159,16 @@ class SpeedTrapListener implements AfterSuccessfulTestHook, BeforeFirstTestHook,
     }
 
     /**
-     * Label describing a test.
+     * Label describing a slow test case. Formatted to support copy/paste with
+     * PHPUnit's --filter CLI option:
+     *
+     *     vendor/bin/phpunit --filter 'JohnKary\\PHPUnit\\Listener\\Tests\\SomeSlowTest::testWithDataProvider with data set "Rock"'
      */
-    protected function makeLabel(TestCase $test): string
+    protected function makeLabel($test): string
     {
-        return sprintf('%s:%s', get_class($test), $test->getName());
+        $call = explode('::', $test);
+
+        return sprintf('%s::%s', addslashes($call[0]), $call[1]);
     }
 
     /**
@@ -188,7 +226,7 @@ class SpeedTrapListener implements AfterSuccessfulTestHook, BeforeFirstTestHook,
     protected function renderFooter()
     {
         if ($hidden = $this->getHiddenCount()) {
-            echo sprintf("...and there %s %s more above your threshold hidden from view", $hidden == 1 ? 'is' : 'are', $hidden);
+            printf("...and there %s %s more above your threshold hidden from view\n", $hidden == 1 ? 'is' : 'are', $hidden);
         }
     }
 
@@ -199,6 +237,7 @@ class SpeedTrapListener implements AfterSuccessfulTestHook, BeforeFirstTestHook,
     {
         $this->slowThreshold = $options['slowThreshold'] ?? 500;
         $this->reportLength = $options['reportLength'] ?? 10;
+        $this->stopOnSlow = $options['stopOnSlow'] ?? false;
     }
 
     /**
@@ -217,7 +256,7 @@ class SpeedTrapListener implements AfterSuccessfulTestHook, BeforeFirstTestHook,
     protected function getSlowThreshold(string $test): int
     {
         $call = explode('::', $test);
-        $ann  = UtilTest::parseTestMethodAnnotations($call[0], $call[1]);
+        $ann = TestUtil::parseTestMethodAnnotations($call[0], $call[1]);
 
         return isset($ann['method']['slowThreshold'][0]) ? (int) $ann['method']['slowThreshold'][0] : $this->slowThreshold;
     }
