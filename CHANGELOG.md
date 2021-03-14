@@ -5,7 +5,21 @@ View diff for a specific commit:
 https://github.com/johnkary/phpunit-speedtrap/commit/XXX where XXX is the commit hash
 
 View diff between two versions:  
-https://github.com/johnkary/phpunit-speedtrap/compare/v3.3.0...v4.0.0
+https://github.com/johnkary/phpunit-speedtrap/compare/v4.0.0...v5.0.0
+
+## 5.0 (xxxx-xx-xx)
+
+Version 5.0 is the largest change since v1.0. It now uses PHPUnit's Extension
+and Hook systems, which have more restrictions on what an Extension is allowed
+to do.
+
+Changes are required if you have extended SpeedTrapListener. See
+[UPGRADE.md](UPGRADE.md) for upgrading your subclass to support 5.0.
+
+* SpeedTrap now requires PHPUnit 8+ and PHP 7.2+,
+* Moved namespace from `JohnKary\PHPUnit\Listener\SpeedTrapListener` to `JohnKary\PHPUnit\Extension\SpeedTrap`
+* `phpunit.xml` requires registering using <extension> element instead of <listener> element. See README.
+* Removed option `stopOnSlow` because Extensions can no longer manipulate the Test Runner
 
 ## 4.0 (xxxx-xx-xx)
 

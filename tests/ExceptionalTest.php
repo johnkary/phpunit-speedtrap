@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace JohnKary\PHPUnit\Listener\Tests;
+namespace JohnKary\PHPUnit\Extension\Tests;
 
 use PHPUnit\Framework\TestCase;
 
@@ -16,12 +16,12 @@ class ExceptionalTest extends TestCase
 
     public function testSkippedTest()
     {
-        $this->markTestSkipped('Skipped tests do not cause Exceptions in Listener');
+        $this->markTestSkipped('Skipped tests do not cause Exceptions in SpeedTrap extension');
     }
 
     public function testIncompleteTest()
     {
-        $this->markTestIncomplete('Incomplete tests do not cause Exceptions in Listener');
+        $this->markTestIncomplete('Incomplete tests do not cause Exceptions in SpeedTrap extension');
     }
 }
  

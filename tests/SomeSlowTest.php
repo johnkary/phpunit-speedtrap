@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace JohnKary\PHPUnit\Listener\Tests;
+namespace JohnKary\PHPUnit\Extension\Tests;
 
 use PHPUnit\Framework\TestCase;
 

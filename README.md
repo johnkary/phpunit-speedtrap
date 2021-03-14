@@ -6,7 +6,7 @@ SpeedTrap reports on slow-running PHPUnit tests right in the console.
 
 Many factors affect test execution time. A test not properly isolated from variable latency (database, network, etc.) and even basic load on the test machine will cause test execution times to fluctuate.
 
-SpeedTrap helps **identify slow tests** but cannot explain **why** those tests are slow. For that consider using [Blackfire.io](https://blackfire.io) to profile the test suite, or another PHPUnit listener [PHPUnit\_Listener\_XHProf](https://github.com/sebastianbergmann/phpunit-testlistener-xhprof), to specifically identify slow code.
+SpeedTrap helps **identify slow tests** but cannot explain **why** those tests are slow. Consider using [Blackfire.io](https://blackfire.io) to profile the test suite to specifically identify slow code.
 
 ![Screenshot of terminal using SpeedTrap](https://i.imgur.com/xSpWL4Z.png)
 
@@ -20,13 +20,13 @@ SpeedTrap is installed using [Composer](http://getcomposer.org). Add it as a `re
 ## Usage
 
 Enable with all defaults by adding the following code to your project's `phpunit.xml` file:
-
+ 
 ```xml
 <phpunit bootstrap="vendor/autoload.php">
 ...
-    <listeners>
-        <listener class="JohnKary\PHPUnit\Listener\SpeedTrapListener" />
-    </listeners>
+    <extensions>
+        <extension class="JohnKary\PHPUnit\Extension\SpeedTrap" />
+    </extensions>
 </phpunit>
 ```
 
@@ -38,7 +38,6 @@ SpeedTrap also supports these parameters:
 
 * **slowThreshold** - Number of milliseconds when a test is considered "slow" (Default: 500ms)
 * **reportLength** - Number of slow tests included in the report (Default: 10 tests)
-* **stopOnSlow** - Stop execution upon first slow test (Default: false)
 
 Each parameter is set in `phpunit.xml`:
 
@@ -46,8 +45,8 @@ Each parameter is set in `phpunit.xml`:
 <phpunit bootstrap="vendor/autoload.php">
     <!-- ... other suite configuration here ... -->
 
-    <listeners>
-        <listener class="JohnKary\PHPUnit\Listener\SpeedTrapListener">
+    <extensions>
+        <extension class="JohnKary\PHPUnit\Extension\SpeedTrap">
             <arguments>
                 <array>
                     <element key="slowThreshold">
@@ -56,13 +55,10 @@ Each parameter is set in `phpunit.xml`:
                     <element key="reportLength">
                         <integer>10</integer>
                     </element>
-                    <element key="stopOnSlow">
-                        <boolean>false</boolean>
-                    </element>
                 </array>
             </arguments>
-        </listener>
-    </listeners>
+        </extension>
+    </extensions>
 </phpunit>
 ```
 
@@ -87,7 +83,7 @@ class SomeTestCase extends PHPUnit\Framework\TestCase
 
 ## Disable slowness profiling using an environment variable
 
-SpeedTrapListener profiles for slow tests when enabled in phpunit.xml. But using an environment variable named `PHPUNIT_SPEEDTRAP` can enable or disable the listener.
+SpeedTrap profiles for slow tests when enabled in phpunit.xml. But using an environment variable named `PHPUNIT_SPEEDTRAP` can enable or disable the extension:
 
     $ PHPUNIT_SPEEDTRAP="disabled" ./vendor/bin/phpunit
 
@@ -95,7 +91,7 @@ SpeedTrapListener profiles for slow tests when enabled in phpunit.xml. But using
 
 Travis CI is popular for running tests in the cloud after pushing new code to a repository.
 
-Step 1) Enable SpeedTrapListener in phpunit.xml, but set `PHPUNIT_SPEEDTRAP="disabled"` to disable profiling when running tests.
+Step 1) Enable SpeedTrap in phpunit.xml, but set `PHPUNIT_SPEEDTRAP="disabled"` to disable profiling when running tests.
 
 ```xml
 <phpunit bootstrap="vendor/autoload.php">
@@ -104,9 +100,9 @@ Step 1) Enable SpeedTrapListener in phpunit.xml, but set `PHPUNIT_SPEEDTRAP="dis
         <env name="PHPUNIT_SPEEDTRAP" value="disabled" />
     </php>
 
-    <listeners>
-        <listener class="JohnKary\PHPUnit\Listener\SpeedTrapListener" />
-    </listeners>
+    <extensions>
+        <extension class="JohnKary\PHPUnit\Extension\SpeedTrap" />
+    </extensions>
 </phpunit>
 ```
 
@@ -128,14 +124,14 @@ Step 3) View the Travis CI build output and read the slowness report printed in 
 
 #### Use case: Enable profiling in development, but disable with Travis CI
 
-Step 1) Enable SpeedTrapListener in phpunit.xml. The slowness report will output during all test suite executions.
+Step 1) Enable SpeedTrap in phpunit.xml. The slowness report will output during all test suite executions.
 
 ```xml
 <phpunit bootstrap="vendor/autoload.php">
 ...
-    <listeners>
-        <listener class="JohnKary\PHPUnit\Listener\SpeedTrapListener" />
-    </listeners>
+    <extensions>
+        <extension class="JohnKary\PHPUnit\Extension\SpeedTrap" />
+    </extensions>
 </phpunit>
 ```
 
@@ -153,11 +149,11 @@ env:
 
 Step 3) View the Travis CI build output and confirm the slowness report is not printed in the console.
 
-#### Use case: Only enable SpeedTrapListener on demand via command-line
+#### Use case: Only enable SpeedTrap on demand via command-line
 
 Useful when you only want to profile slow tests once in a while.
 
-Step 1) Setup phpunit.xml to enable SpeedTrapListener, but disable slowness profiling by setting `PHPUNIT_SPEEDTRAP="disabled"` like this:
+Step 1) Setup phpunit.xml to enable SpeedTrap, but disable slowness profiling by setting `PHPUNIT_SPEEDTRAP="disabled"` like this:
 
 ```xml
 <phpunit bootstrap="vendor/autoload.php">
@@ -166,9 +162,9 @@ Step 1) Setup phpunit.xml to enable SpeedTrapListener, but disable slowness prof
         <env name="PHPUNIT_SPEEDTRAP" value="disabled" />
     </php>
 
-    <listeners>
-        <listener class="JohnKary\PHPUnit\Listener\SpeedTrapListener" />
-    </listeners>
+    <extensions>
+        <extension class="JohnKary\PHPUnit\Extension\SpeedTrap" />
+    </extensions>
 </phpunit>
 ```
 
