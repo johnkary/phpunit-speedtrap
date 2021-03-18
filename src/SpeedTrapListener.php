@@ -129,7 +129,7 @@ class SpeedTrapListener implements TestListener
      */
     protected function isSlow(int $time, int $slowThreshold): bool
     {
-        return $time >= $slowThreshold;
+        return $time && $time >= $slowThreshold;
     }
 
     /**

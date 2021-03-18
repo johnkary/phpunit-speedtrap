@@ -85,6 +85,8 @@ class SomeTestCase extends PHPUnit\Framework\TestCase
 }
 ```
 
+Setting `@slowThreshold` to `0` will disable threshold reports for that test.
+
 ## Disable slowness profiling using an environment variable
 
 SpeedTrapListener profiles for slow tests when enabled in phpunit.xml. But using an environment variable named `PHPUNIT_SPEEDTRAP` can enable or disable the listener.
