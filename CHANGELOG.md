@@ -9,8 +9,8 @@ https://github.com/johnkary/phpunit-speedtrap/compare/v3.3.0...v4.0.0
 
 ## 4.0 (xxxx-xx-xx)
 
-* New option `stopOnSlow` stops execution upon first slow test. Default: false.
-* New annotation option `@slowThreshold 0` disables checks for individual tests.
+* [PR #82](https://github.com/johnkary/phpunit-speedtrap/pull/82) New option `stopOnSlow` stops execution upon first slow test. Default: false.
+* [PR #84](https://github.com/johnkary/phpunit-speedtrap/pull/84) New annotation option `@slowThreshold 0` disables checks for individual tests.
 
 ## 3.3.0 (2020-12-18)
 
