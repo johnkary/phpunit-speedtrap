@@ -38,7 +38,7 @@ SpeedTrap also supports these parameters:
 
 * **slowThreshold** - Number of milliseconds when a test is considered "slow" (Default: 500ms)
 * **reportLength** - Number of slow tests included in the report (Default: 10 tests)
-* **stopOnSlow** - Stop execution upon first slow test (Default: false)
+* **stopOnSlow** - Stop execution upon first slow test (Default: false). Activate by setting "true".
 
 Each parameter is set in `phpunit.xml`:
 
