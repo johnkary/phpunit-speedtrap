@@ -85,7 +85,7 @@ class SomeTestCase extends PHPUnit\Framework\TestCase
 }
 ```
 
-Setting `@slowThreshold` to `0` will disable threshold reports for that test.
+Setting `@slowThreshold 0` will never report that test as slow.
 
 ## Disable slowness profiling using an environment variable
 
