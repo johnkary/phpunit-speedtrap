@@ -18,7 +18,7 @@ final class SpeedTrapListenerTest extends TestCase
     {
         parent::setUp();
 
-        $this->speedTrapListener = new SpeedTrapListener(['slowThreshold' => 500]);
+        $this->speedTrapListener = new SpeedTrapListener(['slowThreshold' => 444]);
     }
 
     public function testItPrintsSpeedData(): void
@@ -36,7 +36,7 @@ final class SpeedTrapListenerTest extends TestCase
         self::assertSame(
             '
 
-You should really speed up these slow tests (>500ms)...
+You should really speed up these slow tests (>444ms)...
  1. 1000ms to run JohnKary\\\\PHPUnit\\\\Listener\\\\Tests\\\\SpeedTrapListenerTest::testItPrintsSpeedData
 
  Fast tests: 0.0 seconds (0.00%)
@@ -69,7 +69,7 @@ You should really speed up these slow tests (>500ms)...
         self::assertSame(
             '
 
-You should really speed up these slow tests (>500ms)...
+You should really speed up these slow tests (>444ms)...
  1. 2000ms to run JohnKary\\\\PHPUnit\\\\Listener\\\\Tests\\\\SpeedTrapListenerTest::test one
  2. 1500ms to run JohnKary\\\\PHPUnit\\\\Listener\\\\Tests\\\\SpeedTrapListenerTest::test two
 
@@ -108,7 +108,7 @@ You should really speed up these slow tests (>500ms)...
         self::assertSame(
             '
 
-You should really speed up these slow tests (>500ms)...
+You should really speed up these slow tests (>444ms)...
  1. 2000ms to run JohnKary\\\\PHPUnit\\\\Listener\\\\Tests\\\\SpeedTrapListenerTest::slow test one
  2. 1500ms to run JohnKary\\\\PHPUnit\\\\Listener\\\\Tests\\\\SpeedTrapListenerTest::slow test two
 
