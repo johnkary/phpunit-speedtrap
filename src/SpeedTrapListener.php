@@ -63,6 +63,12 @@ class SpeedTrapListener implements TestListener
      */
     protected $slow = [];
 
+    /**
+     * Total test execution time so far, in milliseconds
+     * @var int
+     */
+    protected $totalTime = 0;
+
     public function __construct(array $options = [])
     {
         $this->enabled = getenv('PHPUNIT_SPEEDTRAP') === 'disabled' ? false : true;
@@ -87,6 +93,8 @@ class SpeedTrapListener implements TestListener
         if ($this->isSlow($timeInMilliseconds, $threshold)) {
             $this->addSlowTest($test, $timeInMilliseconds);
         }
+
+        $this->totalTime += $timeInMilliseconds;
     }
 
     /**
@@ -117,7 +125,8 @@ class SpeedTrapListener implements TestListener
 
             $this->renderHeader();
             $this->renderBody();
-            $this->renderFooter();
+            $this->renderAnyHiddenSlowTest();
+            $this->renderStats();
         }
     }
 
@@ -225,7 +234,7 @@ class SpeedTrapListener implements TestListener
     /**
      * Renders slowness report footer.
      */
-    protected function renderFooter()
+    protected function renderAnyHiddenSlowTest()
     {
         if ($hidden = $this->getHiddenCount()) {
             printf("...and there %s %s more above your threshold hidden from view\n", $hidden == 1 ? 'is' : 'are', $hidden);
@@ -263,5 +272,29 @@ class SpeedTrapListener implements TestListener
         );
 
         return isset($ann['method']['slowThreshold'][0]) ? (int) $ann['method']['slowThreshold'][0] : $this->slowThreshold;
+    }
+
+    private function renderStats(): void
+    {
+
+        $totalSlowTimeMs = array_sum($this->slow);
+        $totalFastTimeMs = $this->totalTime - $totalSlowTimeMs;
+
+        $totalFastTimeSeconds  = $totalFastTimeMs / 1000;
+        $totalSlowTimeSeconds  = $totalSlowTimeMs / 1000;
+
+        echo PHP_EOL;
+
+        printf(
+            " Fast tests: %.1f seconds (%.2f%%)\n",
+            $totalFastTimeSeconds,
+            100 * $totalFastTimeMs / $this->totalTime
+        );
+
+        printf(
+            " Slow tests: %.1f seconds (%.2f%%)\n",
+            $totalSlowTimeSeconds,
+            100 * $totalSlowTimeMs / $this->totalTime
+        );
     }
 }
