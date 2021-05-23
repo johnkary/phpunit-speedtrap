@@ -8,7 +8,6 @@ use JohnKary\PHPUnit\Listener\SpeedTrapListener;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\TestListener;
 use PHPUnit\Framework\TestSuite;
-use PHPUnit\Util\Test;
 
 final class SpeedTrapListenerTest extends TestCase
 {
@@ -40,6 +39,9 @@ final class SpeedTrapListenerTest extends TestCase
 
 You should really speed up these slow tests (>500ms)...
  1. 1000ms to run JohnKary\\\\PHPUnit\\\\Listener\\\\Tests\\\\SpeedTrapListenerTest::testItPrintsSpeedData
+
+ Fast tests: 0.0 seconds (0.00%)
+ Slow tests: 1.0 seconds (100.00%)
 '
             ,
             $output
@@ -72,6 +74,9 @@ You should really speed up these slow tests (>500ms)...
 You should really speed up these slow tests (>500ms)...
  1. 2000ms to run JohnKary\\\\PHPUnit\\\\Listener\\\\Tests\\\\SpeedTrapListenerTest::test one
  2. 1500ms to run JohnKary\\\\PHPUnit\\\\Listener\\\\Tests\\\\SpeedTrapListenerTest::test two
+
+ Fast tests: 0.0 seconds (0.00%)
+ Slow tests: 3.5 seconds (100.00%)
 '
             ,
             $output
