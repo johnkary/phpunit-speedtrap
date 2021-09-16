@@ -18,7 +18,7 @@
     </testsuite>
   </testsuites>
   <listeners>
-    <listener class="JohnKary\PHPUnit\Listener\SpeedTrapListener">
+    <listener class="\JohnKary\PHPUnit\Listener\SpeedTrapListener">
       <arguments>
         <array>
           <element key="slowThreshold">

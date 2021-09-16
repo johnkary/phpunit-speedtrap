@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace JohnKary\PHPUnit\Listener;
 
+use Exception;
+use JohnKary\PHPUnit\Listener\Renderer\ConsoleRenderer;
+use JohnKary\PHPUnit\Listener\Renderer\ReportRendererInterface;
 use PHPUnit\Framework\{TestListener, TestListenerDefaultImplementation, TestSuite, Test, TestCase};
 use PHPUnit\Util\Test as TestUtil;
 
@@ -42,13 +45,6 @@ class SpeedTrapListener implements TestListener
     protected $slowThreshold;
 
     /**
-     * Number of tests to print in slowness report.
-     *
-     * @var int
-     */
-    protected $reportLength;
-
-    /**
      * Whether the test runner should halt running additional tests after
      * finding a slow test.
      *
@@ -56,16 +52,24 @@ class SpeedTrapListener implements TestListener
      */
     protected $stopOnSlow;
 
-    /**
-     * Collection of slow tests.
-     * Keys (string) => Printable label describing the test
-     * Values (int) => Test execution time, in milliseconds
-     */
-    protected $slow = [];
 
+    /**
+     * @var SpeedTrapReport instance responsible to grab statistics
+     */
+    protected $report;
+
+    /**
+     * @var ReportRendererInterface instance responsible to render report statistics
+     */
+    protected $reportRenderer;
+
+
+    /**
+     * @throws Exception
+     */
     public function __construct(array $options = [])
     {
-        $this->enabled = getenv('PHPUNIT_SPEEDTRAP') === 'disabled' ? false : true;
+        $this->enabled = !(getenv('PHPUNIT_SPEEDTRAP') === 'disabled');
 
         $this->loadOptions($options);
     }
@@ -85,7 +89,10 @@ class SpeedTrapListener implements TestListener
         $threshold = $this->getSlowThreshold($test);
 
         if ($this->isSlow($timeInMilliseconds, $threshold)) {
-            $this->addSlowTest($test, $timeInMilliseconds);
+            $this->report->addSlowTest($test, $timeInMilliseconds);
+            if ($this->stopOnSlow) {
+                $test->getTestResultObject()->stop();
+            }
         }
     }
 
@@ -112,12 +119,10 @@ class SpeedTrapListener implements TestListener
 
         $this->suites--;
 
-        if (0 === $this->suites && $this->hasSlowTests()) {
-            arsort($this->slow); // Sort longest running tests to the top
-
-            $this->renderHeader();
-            $this->renderBody();
-            $this->renderFooter();
+        if (0 === $this->suites && $this->report->hasSlowTests()) {
+            $this->reportRenderer->renderHeader();
+            $this->reportRenderer->renderBody();
+            $this->reportRenderer->renderFooter();
         }
     }
 
@@ -133,28 +138,6 @@ class SpeedTrapListener implements TestListener
     }
 
     /**
-     * Stores a test as slow.
-     */
-    protected function addSlowTest(TestCase $test, int $time)
-    {
-        $label = $this->makeLabel($test);
-
-        $this->slow[$label] = $time;
-
-        if ($this->stopOnSlow) {
-            $test->getTestResultObject()->stop();
-        }
-    }
-
-    /**
-     * Whether at least one test has been considered slow.
-     */
-    protected function hasSlowTests(): bool
-    {
-        return !empty($this->slow);
-    }
-
-    /**
      * Convert PHPUnit's reported test time (microseconds) to milliseconds.
      */
     protected function toMilliseconds(float $time): int
@@ -163,83 +146,37 @@ class SpeedTrapListener implements TestListener
     }
 
     /**
-     * Label describing a slow test case. Formatted to support copy/paste with
-     * PHPUnit's --filter CLI option:
-     *
-     *     vendor/bin/phpunit --filter 'JohnKary\\PHPUnit\\Listener\\Tests\\SomeSlowTest::testWithDataProvider with data set "Rock"'
-     */
-    protected function makeLabel(TestCase $test): string
-    {
-        return sprintf('%s::%s', addslashes(get_class($test)), $test->getName());
-    }
-
-    /**
-     * Calculate number of tests to include in slowness report.
-     */
-    protected function getReportLength(): int
-    {
-        return min(count($this->slow), $this->reportLength);
-    }
-
-    /**
-     * Calculate number of slow tests to be hidden from the slowness report
-     * due to list length.
-     */
-    protected function getHiddenCount(): int
-    {
-        $total = count($this->slow);
-        $showing = $this->getReportLength();
-
-        $hidden = 0;
-        if ($total > $showing) {
-            $hidden = $total - $showing;
-        }
-
-        return $hidden;
-    }
-
-    /**
-     * Renders slowness report header.
-     */
-    protected function renderHeader()
-    {
-        echo sprintf("\n\nYou should really speed up these slow tests (>%sms)...\n", $this->slowThreshold);
-    }
-
-    /**
-     * Renders slowness report body.
-     */
-    protected function renderBody()
-    {
-        $slowTests = $this->slow;
-
-        $length = $this->getReportLength();
-        for ($i = 1; $i <= $length; ++$i) {
-            $label = key($slowTests);
-            $time = array_shift($slowTests);
-
-            echo sprintf(" %s. %sms to run %s\n", $i, $time, $label);
-        }
-    }
-
-    /**
-     * Renders slowness report footer.
-     */
-    protected function renderFooter()
-    {
-        if ($hidden = $this->getHiddenCount()) {
-            printf("...and there %s %s more above your threshold hidden from view\n", $hidden == 1 ? 'is' : 'are', $hidden);
-        }
-    }
-
-    /**
      * Populate options into class internals.
+     *
+     * @throws Exception
      */
     protected function loadOptions(array $options)
     {
         $this->slowThreshold = $options['slowThreshold'] ?? 500;
-        $this->reportLength = $options['reportLength'] ?? 10;
         $this->stopOnSlow = $options['stopOnSlow'] ?? false;
+        $this->report = new SpeedTrapReport(
+            $options['reportLength'] ?? 10,
+            $this->slowThreshold
+        );
+        if (is_array($options['reportRenderer'])) {
+            if (empty($options['reportRenderer']['class'])) {
+                throw new Exception('option reportRenderer - missing class option');
+            }
+            $reportRendererClass = $options['reportRenderer']['class'];
+            if (!class_exists($reportRendererClass)) {
+                throw new Exception("option reportRenderer class - class $reportRendererClass does not exists");
+            }
+            $reportRendererClassInterfaces = class_implements($reportRendererClass);
+            if (!isset($reportRendererClassInterfaces[ReportRendererInterface::class])) {
+                throw new Exception(
+                    "option reportRenderer class - class $reportRendererClass does not implement interface "
+                    . ReportRendererInterface::class
+                );
+            }
+            $this->reportRenderer = new $reportRendererClass($this->report, $options['reportRenderer']['options'] ?? []);
+        } else {
+            $this->reportRenderer = new ConsoleRenderer($this->report, []);
+        }
     }
 
     /**
