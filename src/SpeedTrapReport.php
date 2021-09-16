@@ -61,9 +61,7 @@ class SpeedTrapReport {
      */
     public function addSlowTest(TestCase $test, int $time): void
     {
-        $label = $this->makeLabel($test);
-
-        $this->slow[$label] = $time;
+        $this->slow[] = [$test, $time];
     }
 
     /**
@@ -94,17 +92,6 @@ class SpeedTrapReport {
         return min(count($this->slow), $this->reportLength);
     }
 
-
-    /**
-     * Label describing a slow test case. Formatted to support copy/paste with
-     * PHPUnit's --filter CLI option:
-     *
-     *     vendor/bin/phpunit --filter 'JohnKary\\PHPUnit\\Listener\\Tests\\SomeSlowTest::testWithDataProvider with data set "Rock"'
-     */
-    protected function makeLabel(TestCase $test): string
-    {
-        return sprintf('%s::%s', addslashes(get_class($test)), $test->getName());
-    }
 
     /**
      * @return int

@@ -158,7 +158,8 @@ class SpeedTrapListener implements TestListener
             $options['reportLength'] ?? 10,
             $this->slowThreshold
         );
-        if (is_array($options['reportRenderer'])) {
+
+        if (isset($options['reportRenderer']) && is_array($options['reportRenderer'])) {
             if (empty($options['reportRenderer']['class'])) {
                 throw new Exception('option reportRenderer - missing class option');
             }

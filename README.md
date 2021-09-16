@@ -70,7 +70,14 @@ Each parameter is set in `phpunit.xml`:
                                 <string>\JohnKary\PHPUnit\Listener\Renderer\NgWarningsRenderer</string>
                             </element>
                             <element key="options">
-                                <array></array>
+                                <array>
+                                  <element key="file">
+                                    <string>/tmp/phpunit-speedtrap-report.json</string>
+                                  </element>
+                                  <element key="projectBaseDir">
+                                    <string>/project</string>
+                                  </element>
+                                </array>
                             </element>
                         </array>
                     </element>

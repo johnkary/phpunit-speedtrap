@@ -38,8 +38,8 @@ class ConsoleRenderer implements ReportRendererInterface
 
         $length = $this->speedTrapReport->getReportLength();
         for ($i = 1; $i <= $length; ++$i) {
-            $label = key($slowTests);
-            $time = array_shift($slowTests);
+            [$testCase, $time] = array_shift($slowTests);
+            $label = sprintf('%s::%s', addslashes(get_class($testCase)), $testCase->getName());
 
             echo sprintf(" %s. %sms to run %s\n", $i, $time, $label);
         }
