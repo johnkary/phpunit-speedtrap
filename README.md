@@ -39,6 +39,11 @@ SpeedTrap also supports these parameters:
 * **slowThreshold** - Number of milliseconds when a test is considered "slow" (Default: 500ms)
 * **reportLength** - Number of slow tests included in the report (Default: 10 tests)
 * **stopOnSlow** - Stop execution upon first slow test (Default: false). Activate by setting "true".
+* **reportRenderer** - Used to specify the report renderer to use (ConsoleRenderer is used by default if omitted)
+  * **class** the class to be used in order to render the result of SpeedTrap, for the moment 2 renderers are available
+    * \JohnKary\PHPUnit\Listener\Renderer\NgWarningsRenderer
+    * \JohnKary\PHPUnit\Listener\Renderer\ConsoleRenderer
+  * **options** options to pass to the renderer (this argument can be omitted if not options are needed)
 
 Each parameter is set in `phpunit.xml`:
 
@@ -58,6 +63,23 @@ Each parameter is set in `phpunit.xml`:
                     </element>
                     <element key="stopOnSlow">
                         <boolean>false</boolean>
+                    </element>
+                    <element key="reportRenderer">
+                        <array>
+                            <element key="class">
+                                <string>\JohnKary\PHPUnit\Listener\Renderer\NgWarningsRenderer</string>
+                            </element>
+                            <element key="options">
+                                <array>
+                                  <element key="file">
+                                    <string>/tmp/phpunit-speedtrap-report.json</string>
+                                  </element>
+                                  <element key="projectBaseDir">
+                                    <string>/project</string>
+                                  </element>
+                                </array>
+                            </element>
+                        </array>
                     </element>
                 </array>
             </arguments>
