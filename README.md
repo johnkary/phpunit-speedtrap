@@ -190,12 +190,12 @@ easiest way to set environment variables for the script simple-phpunit is via ph
 
 phpunit.xml.dist
 ```xml
-<env name="SYMFONY_PHPUNIT_REQUIRE" value="johnkary/phpunit-speedtrap"/>
+<env name="SYMFONY_PHPUNIT_REQUIRE" value="johnkary/phpunit-speedtrap:4"/>
 <env name="SYMFONY_PHPUNIT_VERSION" value="8"/>
 ```
 (add the listener as described above)
 
-if you run `vendor/bin/simple-phpunit` symfony will install phpunit (8) and require phpunit speedtrap (latest version)
+if you run `vendor/bin/simple-phpunit` symfony will install phpunit (8) and require phpunit speedtrap (4.x.x)
 
 ## Development
 
