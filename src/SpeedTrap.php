@@ -72,11 +72,11 @@ class SpeedTrap implements AfterSuccessfulTestHook, BeforeFirstTestHook, AfterLa
     {
         if (!$this->enabled) return;
 
-        $timeInMilliseconds = $this->toMilliseconds($time);
+        $timeMS = $this->toMilliseconds($time);
         $threshold = $this->getSlowThreshold($test);
 
-        if ($this->isSlow($timeInMilliseconds, $threshold)) {
-            $this->addSlowTest($test, $timeInMilliseconds);
+        if ($this->isSlow($timeMS, $threshold)) {
+            $this->addSlowTest($test, $timeMS);
         }
     }
 
