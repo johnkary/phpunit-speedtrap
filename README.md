@@ -186,16 +186,20 @@ $ PHPUNIT_SPEEDTRAP=enabled ./vendor/bin/phpunit
 
 symfony/phpunit-bridge allows environment variable `SYMFONY_PHPUNIT_REQUIRE` to define additional dependencies while installing phpunit.
 
-easiest way to set environment variables for the script simple-phpunit is via phpunit.xml.dist:
+The easiest way to set environment variables for the script `simple-phpunit` is via phpunit.xml.dist:
 
 phpunit.xml.dist
 ```xml
-<env name="SYMFONY_PHPUNIT_REQUIRE" value="johnkary/phpunit-speedtrap:4"/>
-<env name="SYMFONY_PHPUNIT_VERSION" value="8"/>
+<phpunit bootstrap="vendor/autoload.php">
+    <php>
+        <env name="SYMFONY_PHPUNIT_REQUIRE" value="johnkary/phpunit-speedtrap:^4"/>
+        <env name="SYMFONY_PHPUNIT_VERSION" value="9"/>
+    </php>
+</phpunit>
 ```
 (add the listener as described above)
 
-if you run `vendor/bin/simple-phpunit` symfony will install phpunit (8) and require phpunit speedtrap (4.x.x)
+Using the above example, running `vendor/bin/simple-phpunit` will now install the latest PHPUnit 9 and require the latest phpunit-speedtrap v4.
 
 ## Development
 
