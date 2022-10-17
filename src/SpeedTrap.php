@@ -209,8 +209,9 @@ class SpeedTrap implements AfterSuccessfulTestHook, BeforeFirstTestHook, AfterLa
         for ($i = 1; $i <= $length; ++$i) {
             $label = key($slowTests);
             $time = array_shift($slowTests);
+            $seconds = $time / 1000;
 
-            echo sprintf(" %s. %sms to run %s\n", $i, $time, $label);
+            echo sprintf(" %s. %ss to run %s\n", $i, $seconds, $label);
         }
     }
 

@@ -33,6 +33,13 @@ class SomeSlowTest extends TestCase
         $this->assertTrue(true);
     }
 
+    public function testSlowTestsOverOneSecond()
+    {
+        $this->extendTime(1300);
+
+        $this->assertTrue(true);
+    }
+
     /**
      * @dataProvider provideTime
      */
