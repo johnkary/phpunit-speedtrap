@@ -40,6 +40,12 @@ jobs:
           - php-version: "8.0"
             phpunit-version: "9.*"
 
+          - php-version: "8.1"
+            phpunit-version: "8.*"
+
+          - php-version: "8.1"
+            phpunit-version: "9.*"
+
     steps:
       - name: "Checkout"
         uses: "actions/checkout@v2"
