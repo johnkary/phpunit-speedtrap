@@ -30,6 +30,9 @@ The `SpeedTrap` Extension must be registered differently in `phpunit.xml`:
 </phpunit>
 ```
 
+Depending on how you install phpunit-speedtrap, you may need to dump the
+Composer autoloader to find the new autoload location: `composer dump-autoload`
+
 If you have extended the old `JohnKary\PHPUnit\Listener\SpeedTrapListener`, you
 must extend the new `JohnKary\PHPUnit\Extension\SpeedTrap`. There are various
 method name changes that may affect your custom subclass. See [PR #83](https://github.com/johnkary/phpunit-speedtrap/pull/83)
