@@ -124,7 +124,7 @@ class SpeedTrap implements AfterSuccessfulTestHook, BeforeFirstTestHook, AfterLa
      *
      * @param int $time Test execution time that was considered slow, in milliseconds
      */
-    protected function addSlowTest(string $test, int $time)
+    protected function addSlowTest(string $test, int $time): void
     {
         $label = $this->makeLabel($test);
 
@@ -193,7 +193,7 @@ class SpeedTrap implements AfterSuccessfulTestHook, BeforeFirstTestHook, AfterLa
     /**
      * Renders slowness report header.
      */
-    protected function renderHeader()
+    protected function renderHeader(): void
     {
         echo sprintf("\n\nYou should really speed up these slow tests (>%sms)...\n", $this->slowThreshold);
     }
@@ -201,7 +201,7 @@ class SpeedTrap implements AfterSuccessfulTestHook, BeforeFirstTestHook, AfterLa
     /**
      * Renders slowness report body.
      */
-    protected function renderBody()
+    protected function renderBody(): void
     {
         $slowTests = $this->slow;
 
@@ -217,7 +217,7 @@ class SpeedTrap implements AfterSuccessfulTestHook, BeforeFirstTestHook, AfterLa
     /**
      * Renders slowness report footer.
      */
-    protected function renderFooter()
+    protected function renderFooter(): void
     {
         if ($hidden = $this->getHiddenCount()) {
             printf("...and there %s %s more above your threshold hidden from view\n", $hidden == 1 ? 'is' : 'are', $hidden);
@@ -227,7 +227,7 @@ class SpeedTrap implements AfterSuccessfulTestHook, BeforeFirstTestHook, AfterLa
     /**
      * Populate options into class internals.
      */
-    protected function loadOptions(array $options)
+    protected function loadOptions(array $options): void
     {
         $this->slowThreshold = $options['slowThreshold'] ?? 500;
         $this->reportLength = $options['reportLength'] ?? 10;
