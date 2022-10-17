@@ -4,7 +4,7 @@ CHANGELOG
 View diff for a specific commit:  
 https://github.com/johnkary/phpunit-speedtrap/commit/XXX where XXX is the commit hash
 
-## 4.0.1 (xxx)
+## 4.0.1 (2022-10-16)
 
 * README documents working with Symfony Framework `simple-phpunit`
 
