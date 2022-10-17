@@ -1,3 +1,40 @@
+UPGRADE FROM 4.x to 5.0
+=======================
+
+This library's v4 core file `JohnKary\PHPUnit\Listener\SpeedTrapListener` has been
+replaced by `JohnKary\PHPUnit\Extension\SpeedTrap` in v5. This change reflects
+switching from PHPUnit's Listener system to its Hook system.
+
+The `SpeedTrap` Extension must be registered differently in `phpunit.xml`:
+
+```xml
+<phpunit bootstrap="vendor/autoload.php">
+    ...
+-    <listeners>
+-        <listener class="JohnKary\PHPUnit\Listener\SpeedTrapListener" />
+-    </listeners>
++    <extensions>
++        <extension class="JohnKary\PHPUnit\Extension\SpeedTrap">
++            <arguments>
++                <array>
++                    <element key="slowThreshold">
++                       <integer>500</integer>
++                   </element>
++                   <element key="reportLength">
++                       <integer>5</integer>
++                   </element>
++               </array>
++           </arguments>
++       </extension>
++   </extensions>
+</phpunit>
+```
+
+If you have extended the old `JohnKary\PHPUnit\Listener\SpeedTrapListener`, you
+must extend the new `JohnKary\PHPUnit\Extension\SpeedTrap`. There are various
+method name changes that may affect your custom subclass. See [PR #83](https://github.com/johnkary/phpunit-speedtrap/pull/83)
+for how the new class has changed.
+
 UPGRADE FROM 3.x to 4.0
 =======================
 

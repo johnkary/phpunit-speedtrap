@@ -4,6 +4,9 @@
     "description": "Find and report on slow tests in your PHPUnit test suite",
     "keywords": [
         "PHPUnit",
+        "extension",
+        "hook",
+        "listener",
         "slow",
         "profile"
     ],
@@ -16,22 +19,22 @@
         }
     ],
     "require": {
-        "php": ">=7.1",
-        "phpunit/phpunit": "^7.0 || ^8.0 || ^9.0"
+        "php": ">=7.2",
+        "phpunit/phpunit": "^8.0 || ^9.0"
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "4.0-dev"
+            "dev-master": "5.0-dev"
         }
     },
     "autoload": {
         "psr-4": {
-            "JohnKary\\PHPUnit\\Listener\\": "src/"
+            "JohnKary\\PHPUnit\\Extension\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "JohnKary\\PHPUnit\\Listener\\Tests\\": "tests/"
+            "JohnKary\\PHPUnit\\Extension\\Tests\\": "tests/"
         }
     }
 }

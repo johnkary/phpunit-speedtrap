@@ -19,12 +19,6 @@ jobs:
 
       matrix:
         include:
-          - php-version: "7.1"
-            phpunit-version: "7.*"
-
-          - php-version: "7.2"
-            phpunit-version: "7.*"
-
           - php-version: "7.2"
             phpunit-version: "8.*"
 
@@ -44,6 +38,12 @@ jobs:
             phpunit-version: "8.*"
 
           - php-version: "8.0"
+            phpunit-version: "9.*"
+
+          - php-version: "8.1"
+            phpunit-version: "8.*"
+
+          - php-version: "8.1"
             phpunit-version: "9.*"
 
     steps:
