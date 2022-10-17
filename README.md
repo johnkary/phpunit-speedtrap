@@ -191,9 +191,12 @@ phpunit.xml.dist
         <env name="SYMFONY_PHPUNIT_REQUIRE" value="johnkary/phpunit-speedtrap:^4"/>
         <env name="SYMFONY_PHPUNIT_VERSION" value="9"/>
     </php>
+
+    <extensions>
+        <extension class="JohnKary\PHPUnit\Extension\SpeedTrap" />
+    </extensions>
 </phpunit>
 ```
-(add the listener as described above)
 
 Using the above example, running `vendor/bin/simple-phpunit` will now install the latest PHPUnit 9 and require the latest phpunit-speedtrap v4.
 
