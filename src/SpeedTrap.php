@@ -121,6 +121,8 @@ class SpeedTrap implements AfterSuccessfulTestHook, BeforeFirstTestHook, AfterLa
 
     /**
      * Stores a test as slow.
+     *
+     * @param int $time Test execution time that was considered slow, in milliseconds
      */
     protected function addSlowTest(string $test, int $time)
     {
