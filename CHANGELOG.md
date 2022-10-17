@@ -4,6 +4,10 @@ CHANGELOG
 View diff for a specific commit:  
 https://github.com/johnkary/phpunit-speedtrap/commit/XXX where XXX is the commit hash
 
+## 4.0.1 (xxx)
+
+* README documents working with Symfony Framework `simple-phpunit`
+
 ## 4.0.0 (2021-05-03)
 
 * Changelog ([`v3.3.0...v.4.0.0`](https://github.com/johnkary/phpunit-speedtrap/compare/v3.3.0...v4.0.0))
