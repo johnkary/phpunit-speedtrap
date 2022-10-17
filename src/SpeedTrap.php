@@ -195,7 +195,7 @@ class SpeedTrap implements AfterSuccessfulTestHook, BeforeFirstTestHook, AfterLa
      */
     protected function renderHeader(): void
     {
-        echo sprintf("\n\nYou should really speed up these slow tests (>%sms)...\n", $this->slowThreshold);
+        echo sprintf("\n\nYou should really speed up these slow tests (>%sms)\n", $this->slowThreshold);
     }
 
     /**
@@ -211,7 +211,7 @@ class SpeedTrap implements AfterSuccessfulTestHook, BeforeFirstTestHook, AfterLa
             $time = array_shift($slowTests);
             $seconds = $time / 1000;
 
-            echo sprintf(" %s. %ss to run %s\n", $i, $seconds, $label);
+            echo sprintf(" %s) %ss to run %s\n", $i, $seconds, $label);
         }
     }
 
@@ -221,7 +221,7 @@ class SpeedTrap implements AfterSuccessfulTestHook, BeforeFirstTestHook, AfterLa
     protected function renderFooter(): void
     {
         if ($hidden = $this->getHiddenCount()) {
-            printf("...and there %s %s more above your threshold hidden from view\n", $hidden == 1 ? 'is' : 'are', $hidden);
+            printf("and there %s %s more above your threshold hidden from view\n", $hidden == 1 ? 'is' : 'are', $hidden);
         }
     }
 
