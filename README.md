@@ -8,7 +8,7 @@ Many factors affect test execution time. A test not properly isolated from varia
 
 SpeedTrap helps **identify slow tests** but cannot explain **why** those tests are slow. Consider using [Blackfire.io](https://blackfire.io) to profile the test suite to specifically identify slow code.
 
-![Screenshot of terminal using SpeedTrap](https://i.imgur.com/xSpWL4Z.png)
+![Screenshot of terminal using SpeedTrap](https://user-images.githubusercontent.com/135607/196077193-ba9e5f95-91ef-4655-88a5-93bb49007a67.png)
 
 ## Installation
 
