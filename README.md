@@ -184,7 +184,6 @@ symfony/phpunit-bridge allows environment variable `SYMFONY_PHPUNIT_REQUIRE` to 
 
 The easiest way to set environment variables for the script `simple-phpunit` is via phpunit.xml.dist:
 
-phpunit.xml.dist
 ```xml
 <phpunit bootstrap="vendor/autoload.php">
     <php>
