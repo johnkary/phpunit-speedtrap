@@ -21,9 +21,16 @@ Changes are required if you have extended SpeedTrapListener. See
 * `phpunit.xml` requires registering using <extension> element instead of <listener> element. See README.
 * Removed option `stopOnSlow` because Extensions can no longer manipulate the Test Runner
 
-## 4.0 (xxxx-xx-xx)
+## 4.0.1 (2022-10-16)
 
-* New option `stopOnSlow` stops execution upon first slow test. Default: false.
+* README documents working with Symfony Framework `simple-phpunit`
+
+## 4.0.0 (2021-05-03)
+
+* Changelog ([`v3.3.0...v.4.0.0`](https://github.com/johnkary/phpunit-speedtrap/compare/v3.3.0...v4.0.0))
+* [PR #81](https://github.com/johnkary/phpunit-speedtrap/pull/81) Reformat slow test case output for compatibility with PHPUnit --filter option
+* [PR #82](https://github.com/johnkary/phpunit-speedtrap/pull/82) New option `stopOnSlow` stops execution upon first slow test. Default: false.
+* [PR #84](https://github.com/johnkary/phpunit-speedtrap/pull/84) New annotation option `@slowThreshold 0` disables checks for individual tests.
 
 ## 3.3.0 (2020-12-18)
 

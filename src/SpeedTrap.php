@@ -116,7 +116,7 @@ class SpeedTrap implements AfterSuccessfulTestHook, BeforeFirstTestHook, AfterLa
      */
     protected function isSlow(int $time, int $slowThreshold): bool
     {
-        return $time >= $slowThreshold;
+        return $slowThreshold && $time >= $slowThreshold;
     }
 
     /**

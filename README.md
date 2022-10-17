@@ -81,6 +81,8 @@ class SomeTestCase extends PHPUnit\Framework\TestCase
 }
 ```
 
+Setting `@slowThreshold 0` will never report that test as slow.
+
 ## Disable slowness profiling using an environment variable
 
 SpeedTrap profiles for slow tests when enabled in phpunit.xml. But using an environment variable named `PHPUNIT_SPEEDTRAP` can enable or disable the extension:
@@ -176,15 +178,24 @@ $ PHPUNIT_SPEEDTRAP=enabled ./vendor/bin/phpunit
 
 ## Using with Symfony Framework
 
-**Executing `vendor/bin/simple-phpunit` will not work while PHPUnit SpeedTrap is installed.**
-
-**Use the PHPUnit binary `vendor/bin/phpunit` while PHPUnit SpeedTrap is installed.**
-
 [Symfony Framework](https://symfony.com/) comes with package [symfony/phpunit-bridge](https://packagist.org/packages/symfony/phpunit-bridge) that installs its own version of PHPUnit and **ignores** what is defined in your project's composer.json or composer.lock file. See the PHPUnit versions it installs with command `ls vendor/bin/.phpunit/`
 
-symfony/phpunit-bridge allows environment variable `SYMFONY_PHPUNIT_VERSION` to define the PHPUnit version it uses. However, this appears incompatible with PHPUnit SpeedTrap.
+symfony/phpunit-bridge allows environment variable `SYMFONY_PHPUNIT_REQUIRE` to define additional dependencies while installing phpunit.
 
-Please submit a PR if you have a solution!
+The easiest way to set environment variables for the script `simple-phpunit` is via phpunit.xml.dist:
+
+phpunit.xml.dist
+```xml
+<phpunit bootstrap="vendor/autoload.php">
+    <php>
+        <env name="SYMFONY_PHPUNIT_REQUIRE" value="johnkary/phpunit-speedtrap:^4"/>
+        <env name="SYMFONY_PHPUNIT_VERSION" value="9"/>
+    </php>
+</phpunit>
+```
+(add the listener as described above)
+
+Using the above example, running `vendor/bin/simple-phpunit` will now install the latest PHPUnit 9 and require the latest phpunit-speedtrap v4.
 
 ## Development
 

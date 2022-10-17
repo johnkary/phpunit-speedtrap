@@ -66,12 +66,25 @@ class SomeSlowTest extends TestCase
 
     /**
      * This test's runtime would normally be over the suite's threshold, but
-     * this annotation sets a higher threshold, causing it to be not be
-     * considered slow and not reported on in the test output.
+     * this annotation sets a higher threshold causing it not to be
+     * considered slow and not reported in the test output.
      *
      * @slowThreshold 50000
      */
     public function testCanSetHigherSlowThreshold()
+    {
+        $this->extendTime(600);
+        $this->assertTrue(true);
+    }
+
+    /**
+     * This test's runtime would normally be over the suite's threshold, but
+     * this annotation disables threshold checks causing it not to be
+     * considered slow and not reported in the test output.
+     *
+     * @slowThreshold 0
+     */
+    public function testCanDisableSlowThreshold()
     {
         $this->extendTime(600);
         $this->assertTrue(true);
