@@ -38,6 +38,14 @@ must extend the new `JohnKary\PHPUnit\Extension\SpeedTrap`. There are various
 method name changes that may affect your custom subclass. See [PR #83](https://github.com/johnkary/phpunit-speedtrap/pull/83)
 for many of the new class has changed.
 
+If you programmatically parse the slowness report text visible when running
+`vendor/bin/phpunit`, there have been some text formatting changes in the output:
+
+* The header text has changed
+* The footer text has changed
+* The slow test output has changed
+* Slowness execution time now displays in seconds instead of milliseconds
+
 UPGRADE FROM 3.x to 4.0
 =======================
 
