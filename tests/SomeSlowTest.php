@@ -49,7 +49,7 @@ class SomeSlowTest extends TestCase
 
         $this->assertTrue(true);
     }
-    public function provideTime()
+    public static function provideTime()
     {
         return [
             'Rock' => [800],

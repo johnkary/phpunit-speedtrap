@@ -25,7 +25,7 @@ Enable with all defaults by adding the following code to your project's `phpunit
 <phpunit bootstrap="vendor/autoload.php">
 ...
     <extensions>
-        <extension class="JohnKary\PHPUnit\Extension\SpeedTrap" />
+        <bootstrap class="JohnKary\PHPUnit\Extension\SpeedTrapExtension" />
     </extensions>
 </phpunit>
 ```
@@ -46,18 +46,10 @@ Each parameter is set in `phpunit.xml`:
     <!-- ... other suite configuration here ... -->
 
     <extensions>
-        <extension class="JohnKary\PHPUnit\Extension\SpeedTrap">
-            <arguments>
-                <array>
-                    <element key="slowThreshold">
-                        <integer>500</integer>
-                    </element>
-                    <element key="reportLength">
-                        <integer>10</integer>
-                    </element>
-                </array>
-            </arguments>
-        </extension>
+        <bootstrap class="JohnKary\PHPUnit\Extension\SpeedTrapExtension">
+            <parameter name="slowThreshold" value="500" />
+            <parameter name="reportLength" value="10" />
+        </bootstrap>
     </extensions>
 </phpunit>
 ```
@@ -132,7 +124,7 @@ Step 1) Enable SpeedTrap in phpunit.xml. The slowness report will output during 
 <phpunit bootstrap="vendor/autoload.php">
 ...
     <extensions>
-        <extension class="JohnKary\PHPUnit\Extension\SpeedTrap" />
+        <bootstrap class="JohnKary\PHPUnit\Extension\SpeedTrapExtension" />
     </extensions>
 </phpunit>
 ```
@@ -165,7 +157,7 @@ Step 1) Setup phpunit.xml to enable SpeedTrap, but disable slowness profiling by
     </php>
 
     <extensions>
-        <extension class="JohnKary\PHPUnit\Extension\SpeedTrap" />
+        <bootstrap class="JohnKary\PHPUnit\Extension\SpeedTrapExtension" />
     </extensions>
 </phpunit>
 ```
@@ -192,7 +184,7 @@ The easiest way to set environment variables for the script `simple-phpunit` is 
     </php>
 
     <extensions>
-        <extension class="JohnKary\PHPUnit\Extension\SpeedTrap" />
+        <bootstrap class="JohnKary\PHPUnit\Extension\SpeedTrapExtension" />
     </extensions>
 </phpunit>
 ```

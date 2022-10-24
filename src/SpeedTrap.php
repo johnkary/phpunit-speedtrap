@@ -3,35 +3,21 @@ declare(strict_types=1);
 
 namespace JohnKary\PHPUnit\Extension;
 
-use PHPUnit\Runner\AfterLastTestHook;
-use PHPUnit\Runner\AfterSuccessfulTestHook;
-use PHPUnit\Runner\BeforeFirstTestHook;
-use PHPUnit\Util\Test as TestUtil;
+use PHPUnit\Event;
+use PHPUnit\Metadata;
 
 /**
  * A PHPUnit Extension that exposes your slowest running tests by outputting
  * results directly to the console.
  */
-class SpeedTrap implements AfterSuccessfulTestHook, BeforeFirstTestHook, AfterLastTestHook
+class SpeedTrap
 {
     /**
-     * Slowness profiling enabled by default. Set to false to disable profiling
-     * and reporting.
+     * A map of test identifiers to PreparedTest objects, for all tests that have been prepared, but not yet passed.
      *
-     * Use environment variable "PHPUNIT_SPEEDTRAP" set to value "disabled" to
-     * disable profiling.
-     *
-     * @var boolean
+     * @var array<string, PreparedTest>
      */
-    protected $enabled = true;
-
-    /**
-     * Internal tracking for test suites.
-     *
-     * Increments as more suites are run, then decremented as they finish. All
-     * suites have been run when returns to 0.
-     */
-    protected $suites = 0;
+    private array $preparedTests = [];
 
     /**
      * Test execution time (milliseconds) after which a test will be considered
@@ -55,24 +41,44 @@ class SpeedTrap implements AfterSuccessfulTestHook, BeforeFirstTestHook, AfterLa
      */
     protected $slow = [];
 
-    public function __construct(array $options = [])
-    {
-        $this->enabled = getenv('PHPUNIT_SPEEDTRAP') === 'disabled' ? false : true;
 
-        $this->loadOptions($options);
+    public function __construct(
+        int $slowThreshold,
+        int $reportLength,
+    ) {
+        $this->slowThreshold = $slowThreshold;
+        $this->reportLength = $reportLength;
     }
 
-    /**
-     * A test successfully ended.
-     *
-     * @param string $test
-     * @param float  $time
-     */
-    public function executeAfterSuccessfulTest(string $test, float $time): void
-    {
-        if (!$this->enabled) return;
+    public function recordThatTestHasBeenPrepared(
+        Event\Code\Test $test,
+        Event\Telemetry\HRTime $start
+    ): void {
+        if (array_key_exists($test->id(), $this->preparedTests)) {
+            throw new \RuntimeException('This should not happen.');
+        }
 
-        $timeMS = $this->toMilliseconds($time);
+        $this->preparedTests[$test->id()] = new PreparedTest(
+            $test,
+            $start
+        );
+    }
+
+    public function recordThatTestHasPassed(
+        Event\Code\Test $test,
+        Event\Telemetry\HRTime $end
+    ): void {
+        if (!array_key_exists($test->id(), $this->preparedTests)) {
+            throw new \RuntimeException('This should not happen.');
+        }
+
+        $preparedTest = $this->preparedTests[$test->id()];
+
+        unset($this->preparedTests[$test->id()]);
+
+        $duration = $end->duration($preparedTest->start());
+
+        $timeMS = $this->toMilliseconds($duration->asFloat());
         $threshold = $this->getSlowThreshold($test);
 
         if ($this->isSlow($timeMS, $threshold)) {
@@ -81,25 +87,11 @@ class SpeedTrap implements AfterSuccessfulTestHook, BeforeFirstTestHook, AfterLa
     }
 
     /**
-     * A test suite started.
-     */
-    public function executeBeforeFirstTest(): void
-    {
-        if (!$this->enabled) return;
-
-        $this->suites++;
-    }
-
-    /**
      * A test suite ended.
      */
-    public function executeAfterLastTest(): void
+    public function showSlowTests(): void
     {
-        if (!$this->enabled) return;
-
-        $this->suites--;
-
-        if (0 === $this->suites && $this->hasSlowTests()) {
+        if ($this->hasSlowTests()) {
             arsort($this->slow); // Sort longest running tests to the top
 
             $this->renderHeader();
@@ -124,7 +116,7 @@ class SpeedTrap implements AfterSuccessfulTestHook, BeforeFirstTestHook, AfterLa
      *
      * @param int $time Test execution time that was considered slow, in milliseconds
      */
-    protected function addSlowTest(string $test, int $time): void
+    protected function addSlowTest(Event\Code\Test $test, int $time): void
     {
         $label = $this->makeLabel($test);
 
@@ -153,9 +145,15 @@ class SpeedTrap implements AfterSuccessfulTestHook, BeforeFirstTestHook, AfterLa
      *
      *     vendor/bin/phpunit --filter 'JohnKary\\PHPUnit\\Extension\\Tests\\SomeSlowTest::testWithDataProvider with data set "Rock"'
      */
-    protected function makeLabel(string $test): string
+    protected function makeLabel(Event\Code\Test $test): string
     {
-        list($class, $testName) = explode('::', $test);
+        if (!$test->isTestMethod()) {
+            return $test->name();
+        }
+
+        /** @var Event\Code\TestMethod $test */
+        $class = $test->className();
+        $testName = $test->methodName();
 
         // Remove argument list from end of string that is appended
         // by default \PHPUnit\Framework\TestCase->toString() so slowness report
@@ -226,15 +224,6 @@ class SpeedTrap implements AfterSuccessfulTestHook, BeforeFirstTestHook, AfterLa
     }
 
     /**
-     * Populate options into class internals.
-     */
-    protected function loadOptions(array $options): void
-    {
-        $this->slowThreshold = $options['slowThreshold'] ?? 500;
-        $this->reportLength = $options['reportLength'] ?? 10;
-    }
-
-    /**
      * Calculate slow test threshold for given test. A TestCase may override the
      * suite-wide slowness threshold by using the annotation {@slowThreshold}
      * with a threshold value in milliseconds.
@@ -247,11 +236,20 @@ class SpeedTrap implements AfterSuccessfulTestHook, BeforeFirstTestHook, AfterLa
      * public function testLongRunningProcess() {}
      * </code>
      */
-    protected function getSlowThreshold(string $test): int
+    protected function getSlowThreshold(Event\Code\Test $test): int
     {
-        list($class, $testName) = explode('::', $test);
-        $ann = TestUtil::parseTestMethodAnnotations($class, $testName);
+        if (!$test->isTestMethod()) {
+            return $this->slowThreshold;
+        }
 
-        return isset($ann['method']['slowThreshold'][0]) ? (int) $ann['method']['slowThreshold'][0] : $this->slowThreshold;
+        /** @var Event\Code\TestMethod $test */
+        $docBlock = Metadata\Annotation\Parser\Registry::getInstance()->forMethod(
+            $test->className(),
+            $test->methodName()
+        );
+
+        $ann = $docBlock->symbolAnnotations();
+
+        return isset($ann['slowThreshold'][0]) ? (int) $ann['slowThreshold'][0] : $this->slowThreshold;
     }
 }
