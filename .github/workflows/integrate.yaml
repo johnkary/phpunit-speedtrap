@@ -18,33 +18,9 @@ jobs:
       fail-fast: false
 
       matrix:
-        include:
-          - php-version: "7.2"
-            phpunit-version: "8.*"
-
-          - php-version: "7.3"
-            phpunit-version: "8.*"
-
-          - php-version: "7.3"
-            phpunit-version: "9.*"
-
-          - php-version: "7.4"
-            phpunit-version: "8.*"
-
-          - php-version: "7.4"
-            phpunit-version: "9.*"
-
-          - php-version: "8.0"
-            phpunit-version: "8.*"
-
-          - php-version: "8.0"
-            phpunit-version: "9.*"
-
-          - php-version: "8.1"
-            phpunit-version: "8.*"
-
-          - php-version: "8.1"
-            phpunit-version: "9.*"
+        php-version:
+          - "8.1"
+          - "8.2"
 
     steps:
       - name: "Checkout"
@@ -69,8 +45,8 @@ jobs:
           key: "php-${{ matrix.php-version }}-composer-${{ matrix.phpunit-version }}"
           restore-keys: "php-${{ matrix.php-version }}-composer-"
 
-      - name: "Require phpunit/phpunit ${{ matrix.phpunit-version }}"
-        run: "composer require phpunit/phpunit:${{ matrix.phpunit-version }}"
+      - name: "Install dependencies with composer"
+        run: "composer install --no-interaction --no-progress"
 
       - name: "Run tests with phpunit/phpunit"
         run: "vendor/bin/phpunit"
